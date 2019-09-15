@@ -1,7 +1,7 @@
 import { NetworkState } from 'reducers/network.reducer';
-import { LocalizationState } from 'reducers/localization.reducer';
+import { Issues } from 'reducers/issues.reducer';
 
 export type State = {
   network: NetworkState;
-  localization: LocalizationState;
+  issues: Issues;
 };

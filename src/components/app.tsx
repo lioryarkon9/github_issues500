@@ -11,28 +11,23 @@ import lazyLoad from 'utils/lazy-load.utils';
 import store from 'store';
 import theme from 'constants/themes.constants';
 
-import Localization from 'components/localization'; // TODO: remove if no localization
-import Layout from 'components/layout/layout';
-import Sample from 'sample/sample'; // TODO: replace this with actual component
+import IssuesView from 'components/issues-view';
 
 class App extends React.Component<{}> {
   render() {
+    console.log('state: ', store.getState());
     return (
       <Provider store={store}>
-        <Localization>
-          <ThemeProvider theme={theme}>
-            <Router history={history}>
-              <Layout>
-                <Route exact path="/" name="sample" component={Sample} />
-                <Route
-                  path="/lazy"
-                  name="lazy"
-                  component={lazyLoad(() => import('sample/lazy'))}
-                />
-              </Layout>
-            </Router>
-          </ThemeProvider>
-        </Localization>
+        <ThemeProvider theme={theme}>
+          <Router history={history}>
+            <Route exact path="/" name="sample" component={IssuesView} />
+            <Route
+              path="/lazy"
+              name="lazy"
+              component={lazyLoad(() => import('sample/lazy'))}
+            />
+          </Router>
+        </ThemeProvider>
       </Provider>
     );
   }
