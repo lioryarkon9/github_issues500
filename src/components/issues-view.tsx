@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import RouteWrapper from 'components/route-wrapper';
 import CreateButton from 'components/create-button';
 import IssuesList from 'components/issues-list';
-import { fetchIssuesByOwnerAndRepo } from 'actions/issues';
+import { addNewIssue, fetchIssuesByOwnerAndRepo } from 'actions/issues';
 import { connect } from 'react-redux';
 
 const TopContainer = styled.div`
@@ -66,7 +66,14 @@ const ItemsHeaderContainer = styled.div`
   border-bottom: 1px solid #d1d5da;
 `;
 
-const IssuesView = (props: any) => {
+const NewIssueButton = connect(
+  null,
+  { addNewIssue }
+)((props: any) => (
+  <CreateButton onClick={props.addNewIssue}>New issue</CreateButton>
+));
+
+const IssuesView = () => {
   useEffect(() => {
     console.info('useEffect fired: uncomment the fetch method'); // props.fetchIssuesByOwnerAndRepo();
   }, []);
@@ -79,7 +86,7 @@ const IssuesView = (props: any) => {
           <ActionButtonType1>Labels</ActionButtonType1>
           <ActionButtonType1>Milestones</ActionButtonType1>
         </SubContainerTop>
-        <CreateButton>New issue</CreateButton>
+        <NewIssueButton />
       </TopContainer>
       <ItemsContainer>
         <ItemsHeaderContainer>
