@@ -12,6 +12,8 @@ import store from 'store';
 import theme from 'constants/themes.constants';
 
 import IssuesView from 'components/issues-view';
+import { NEW_ISSUE_URL } from 'constants/custom';
+import NewIssueView from 'components/new-issue-view';
 
 class App extends React.Component<{}> {
   render() {
@@ -20,6 +22,11 @@ class App extends React.Component<{}> {
         <ThemeProvider theme={theme}>
           <Router history={history}>
             <Route exact path="/" name="sample" component={IssuesView} />
+            <Route
+              path={'/' + NEW_ISSUE_URL}
+              name="new-issue"
+              component={NewIssueView}
+            />
             <Route
               path="/lazy"
               name="lazy"

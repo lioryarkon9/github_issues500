@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 import RouteWrapper from 'components/route-wrapper';
 import CreateButton from 'components/create-button';
 import IssuesList from 'components/issues-list';
+import ItemsContainer from 'components/items-container';
 import { addNewIssue, fetchIssuesByOwnerAndRepo } from 'actions/issues';
-import { connect } from 'react-redux';
+import { NEW_ISSUE_URL } from 'constants/custom';
 
 const TopContainer = styled.div`
   display: flex;
@@ -48,14 +51,6 @@ const ActionButtonType1 = styled.div`
   }
 `;
 
-const ItemsContainer = styled.div`
-  min-height: 10vh;
-  border: 1px solid #d1d5da;
-  border-radius: 3px;
-  background-color: #fff;
-  margin-top: 2%;
-`;
-
 const ItemsHeaderContainer = styled.div`
   height: 60px;
   padding: 0 12px 0 12px;
@@ -70,12 +65,15 @@ const NewIssueButton = connect(
   null,
   { addNewIssue }
 )((props: any) => (
-  <CreateButton onClick={props.addNewIssue}>New issue</CreateButton>
+  <Link to={NEW_ISSUE_URL} style={{ textDecoration: 'none' }}>
+    <CreateButton onClick={props.addNewIssue}>New issue</CreateButton>
+  </Link>
 ));
 
-const IssuesView = () => {
+const IssuesView = (props: any) => {
   useEffect(() => {
-    console.info('useEffect fired: uncomment the fetch method'); // props.fetchIssuesByOwnerAndRepo();
+    console.info('useEffect fired: uncomment the fetch method');
+    //props.fetchIssuesByOwnerAndRepo();
   }, []);
   return (
     <RouteWrapper>

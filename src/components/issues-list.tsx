@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { SingleIssue } from 'reducers/issues.reducer';
 import IssueItem from 'components/issue-item';
+import { sortIssuesFunction } from 'utils/prettify';
 
 const mapStateToProps = (state: any) => ({
   issues: state.issues
@@ -10,16 +11,7 @@ const mapStateToProps = (state: any) => ({
 const IssuesList = (props: any) => {
   const issuesList = Object.keys(props.issues)
     .map(issueId => props.issues[issueId])
-    .sort(
-      (a: SingleIssue, b: SingleIssue): number => {
-        // sorting by updated_at ascending
-        const updatedOnDate1 = new Date(a.updated_at),
-          updatedOnDate2 = new Date(b.updated_at);
-        return (
-          updatedOnDate2.getMilliseconds() - updatedOnDate1.getMilliseconds()
-        );
-      }
-    );
+    .sort(sortIssuesFunction);
   if (!issuesList.length) {
     return <div>No issues yet</div>;
   }
