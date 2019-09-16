@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions';
 import mockIssues from 'mock_issues.json';
+import { SET_ISSUES_ARRAY_AS_OBJECT } from 'constants/action-names';
 
 export type SingleIssue = {
   url: string;
@@ -31,15 +32,22 @@ export type Issues = {
   [id: number]: SingleIssue;
 };
 
-export const getInitialIssues = (issuesArr: any[]): Issues => {
+export const getIssuesObjectByList = (issuesArr: any[]): Issues => {
   return issuesArr.reduce((acc: Issues, cur: any) => {
     acc[cur.id] = cur;
     return acc;
   }, {});
 };
 
-const initialState: Issues = getInitialIssues(mockIssues);
+const initialState: Issues = getIssuesObjectByList(mockIssues);
 
-const issuesReducer = handleActions<Issues>({}, initialState);
+const issuesReducer = handleActions<Issues>(
+  {
+    [SET_ISSUES_ARRAY_AS_OBJECT]: (state, action) => {
+      return Object.assign({}, state, action.payload);
+    }
+  },
+  initialState
+);
 
 export default issuesReducer;

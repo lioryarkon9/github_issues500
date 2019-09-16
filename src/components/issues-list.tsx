@@ -11,7 +11,6 @@ const IssuesList = (props: any) => {
   const issuesList = Object.keys(props.issues).map(
     issueId => props.issues[issueId]
   );
-  console.log('issuesList: ', issuesList);
   return (
     <div>
       {issuesList.map(item => (

@@ -15,7 +15,6 @@ import IssuesView from 'components/issues-view';
 
 class App extends React.Component<{}> {
   render() {
-    console.log('state: ', store.getState());
     return (
       <Provider store={store}>
         <ThemeProvider theme={theme}>
