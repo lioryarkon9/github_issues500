@@ -1,6 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+export default (props: any) => (
+  <Wrapper>
+    <BodyContainer>{props.children}</BodyContainer>
+  </Wrapper>
+);
+
 const Wrapper = styled.div`
   min-height: 100vh;
   box-sizing: border-box;
@@ -13,9 +19,3 @@ const BodyContainer = styled.div`
   max-width: 1800px;
   min-width: 1100px;
 `;
-
-export default (props: any) => (
-  <Wrapper>
-    <BodyContainer>{props.children}</BodyContainer>
-  </Wrapper>
-);

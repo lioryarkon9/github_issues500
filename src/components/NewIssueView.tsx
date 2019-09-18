@@ -1,8 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
-import RouteWrapper from 'components/route-wrapper';
-import ItemsContainer from 'components/items-container';
+import RouteWrapper from 'components/RouteWrapper';
+import ItemsContainer from 'components/ItemsContainer';
+
+const NewIssueView = () => {
+  return (
+    <RouteWrapper>
+      <ItemsContainer>
+        <TitleInputContainer>
+          <TitleInput placeholder="Title" id="issue-title" />
+        </TitleInputContainer>
+      </ItemsContainer>
+    </RouteWrapper>
+  );
+};
 
 const TitleInputContainer = styled.div`
   display: flex;
@@ -18,17 +30,5 @@ const TitleInput = styled.input`
   padding: 0 5px 0 5px;
   font-size: 1.1em;
 `;
-
-const NewIssueView = () => {
-  return (
-    <RouteWrapper>
-      <ItemsContainer>
-        <TitleInputContainer>
-          <TitleInput placeholder="Title" id="issue-title" />
-        </TitleInputContainer>
-      </ItemsContainer>
-    </RouteWrapper>
-  );
-};
 
 export default NewIssueView;

@@ -5,7 +5,6 @@ import {
   ADD_NEW_ISSUE
 } from 'constants/action-names';
 import { GITHUB_USER, GITHUB_REPO } from 'constants/custom';
-import { sortIssuesFunction } from 'utils/prettify';
 
 export type SingleIssue = {
   url: string;

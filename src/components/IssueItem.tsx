@@ -1,11 +1,26 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { SingleIssue } from 'reducers/issues.reducer';
-import { getEnglishMonthNameByInt } from 'utils/prettify';
+import { getPrettyOpenedOn } from 'utils/prettify';
 
 interface UiSingleIssue extends SingleIssue {
   key: string;
 }
+
+const IssueItem = (props: UiSingleIssue) => (
+  <StyledIssue>
+    <LeftContainer>
+      <SubLeftContainer1>
+        <IssueStateIcon />
+        <div>{props.title}</div>
+      </SubLeftContainer1>
+      <SubLeftContainer2>
+        {props.number} {getPrettyOpenedOn(props.created_at)}
+      </SubLeftContainer2>
+    </LeftContainer>
+    <RightContainer>{props.comments}</RightContainer>
+  </StyledIssue>
+);
 
 const StyledIssue = styled.div`
   background-color: #fff;
@@ -48,31 +63,5 @@ const SubLeftContainer2 = styled.div`
     content: '#';
   }
 `;
-
-const getPrettyOpenedOn = (strDate: string): string => {
-  let result = 'opened on';
-  const dateObject = new Date(strDate);
-  const dd = dateObject.getDate(),
-    mm = dateObject.getMonth(),
-    yyyy = dateObject.getFullYear();
-  result += ' ' + getEnglishMonthNameByInt(mm) + ' ' + dd + ', ' + yyyy;
-
-  return result;
-};
-
-const IssueItem = (props: UiSingleIssue) => (
-  <StyledIssue>
-    <LeftContainer>
-      <SubLeftContainer1>
-        <IssueStateIcon />
-        <div>{props.title}</div>
-      </SubLeftContainer1>
-      <SubLeftContainer2>
-        {props.number} {getPrettyOpenedOn(props.created_at)}
-      </SubLeftContainer2>
-    </LeftContainer>
-    <RightContainer>{props.comments}</RightContainer>
-  </StyledIssue>
-);
 
 export default IssueItem;

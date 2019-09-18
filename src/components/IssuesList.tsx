@@ -1,12 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { SingleIssue } from 'reducers/issues.reducer';
-import IssueItem from 'components/issue-item';
+import IssueItem from 'components/IssueItem';
 import { sortIssuesFunction } from 'utils/prettify';
-
-const mapStateToProps = (state: any) => ({
-  issues: state.issues
-});
 
 const IssuesList = (props: any) => {
   const issuesList = Object.keys(props.issues)
@@ -48,5 +43,9 @@ const IssuesList = (props: any) => {
     </div>
   );
 };
+
+const mapStateToProps = (state: any) => ({
+  issues: state.issues
+});
 
 export default connect(mapStateToProps)(IssuesList);

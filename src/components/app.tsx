@@ -11,12 +11,13 @@ import lazyLoad from 'utils/lazy-load.utils';
 import store from 'store';
 import theme from 'constants/themes.constants';
 
-import IssuesView from 'components/issues-view';
+import IssuesView from 'components/IssuesView';
 import { NEW_ISSUE_URL } from 'constants/custom';
-import NewIssueView from 'components/new-issue-view';
+import NewIssueView from 'components/NewIssueView';
 
 class App extends React.Component<{}> {
   render() {
+    console.info('state: ', store.getState());
     return (
       <Provider store={store}>
         <ThemeProvider theme={theme}>
