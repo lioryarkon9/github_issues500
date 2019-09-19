@@ -3,8 +3,8 @@ import mockIssues from 'mock_issues.json';
 import {
   SET_ISSUES_ARRAY_AS_OBJECT,
   ADD_NEW_ISSUE
-} from 'constants/action-names';
-import { GITHUB_USER, GITHUB_REPO } from 'constants/custom';
+} from 'constants/actionNames.constants';
+import { GITHUB_USER, GITHUB_REPO } from 'constants/custom.constants';
 
 export type SingleIssue = {
   url: string;
@@ -43,7 +43,7 @@ export const getIssuesObjectByList = (issuesArr: any[]): Issues => {
   }, {});
 };
 
-const initialState: Issues = getIssuesObjectByList(mockIssues); // {}
+const initialState: Issues = getIssuesObjectByList(mockIssues); // {};
 
 const issuesReducer = handleActions<Issues>(
   {

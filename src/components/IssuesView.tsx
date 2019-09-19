@@ -4,10 +4,10 @@ import styled from '@emotion/styled';
 import RouteWrapper from 'components/RouteWrapper';
 import IssuesList from 'components/IssuesList';
 import ItemsContainer from 'components/ItemsContainer';
-import { fetchIssuesByOwnerAndRepo } from 'actions/issues';
+import { fetchIssuesByOwnerAndRepo } from 'actions/issues.actions';
 import NewIssueButton from 'components/NewIssueButton';
 
-const IssuesView = () => {
+const IssuesView = (props: any) => {
   useEffect(() => {
     console.info('useEffect fired: uncomment the fetch method');
     //props.fetchIssuesByOwnerAndRepo();

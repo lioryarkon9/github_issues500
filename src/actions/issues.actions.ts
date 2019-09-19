@@ -3,8 +3,8 @@ import {
   FETCH_ISSUES_BY_OWNER_AND_REPO,
   SET_ISSUES_ARRAY_AS_OBJECT,
   ADD_NEW_ISSUE
-} from 'constants/action-names';
-import { GITHUB_USER, GITHUB_REPO } from 'constants/custom';
+} from 'constants/actionNames.constants';
+import { GITHUB_USER, GITHUB_REPO } from 'constants/custom.constants';
 import { getIssuesObjectByList, SingleIssue } from 'reducers/issues.reducer';
 
 type IssueResponse = [SingleIssue];

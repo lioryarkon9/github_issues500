@@ -12,12 +12,12 @@ import store from 'store';
 import theme from 'constants/themes.constants';
 
 import IssuesView from 'components/IssuesView';
-import { NEW_ISSUE_URL } from 'constants/custom';
+import { NEW_ISSUE_URL, SINGLE_ISSUE_URL } from 'constants/custom.constants';
 import NewIssueView from 'components/NewIssueView';
+import SingleIssueView from 'components/SingleIssueView';
 
 class App extends React.Component<{}> {
   render() {
-    console.info('state: ', store.getState());
     return (
       <Provider store={store}>
         <ThemeProvider theme={theme}>
@@ -28,6 +28,7 @@ class App extends React.Component<{}> {
               name="new-issue"
               component={NewIssueView}
             />
+            <Route path={'/' + SINGLE_ISSUE_URL} component={SingleIssueView} />
             <Route
               path="/lazy"
               name="lazy"

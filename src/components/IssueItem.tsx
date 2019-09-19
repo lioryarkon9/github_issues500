@@ -2,9 +2,14 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { SingleIssue } from 'reducers/issues.reducer';
 import { getPrettyOpenedOn } from 'utils/prettify';
+import { Link } from 'react-router-dom';
+import { SINGLE_ISSUE_URL } from 'constants/custom.constants';
+import { setCurrentIssueId } from 'actions/ui.actions';
+import { connect } from 'react-redux';
 
 interface UiSingleIssue extends SingleIssue {
   key: string;
+  setCurrentIssueId: any;
 }
 
 const IssueItem = (props: UiSingleIssue) => (
@@ -12,7 +17,13 @@ const IssueItem = (props: UiSingleIssue) => (
     <LeftContainer>
       <SubLeftContainer1>
         <IssueStateIcon />
-        <div>{props.title}</div>
+        <div>
+          <Link
+            to={SINGLE_ISSUE_URL}
+            onClick={e => props.setCurrentIssueId(props.id)}>
+            {props.title}
+          </Link>
+        </div>
       </SubLeftContainer1>
       <SubLeftContainer2>
         {props.number} {getPrettyOpenedOn(props.created_at)}
@@ -64,4 +75,7 @@ const SubLeftContainer2 = styled.div`
   }
 `;
 
-export default IssueItem;
+export default connect(
+  null,
+  { setCurrentIssueId }
+)(IssueItem);
