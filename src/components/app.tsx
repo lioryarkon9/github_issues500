@@ -30,7 +30,7 @@ class App extends React.Component<{}> {
             />
             <Route
               path={'/' + SINGLE_ISSUE_URL + '/:id'}
-              component={SingleIssueView}
+              component={(router: any) => <SingleIssueView router={router} />}
             />
             <Route
               path="/lazy"

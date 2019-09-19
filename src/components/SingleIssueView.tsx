@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import RouteWrapper from 'components/RouteWrapper';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { setCurrentIssueId } from 'actions/ui.actions';
 
 const SingleIssueView = (props: any) => {
+  useEffect(() => {
+    const singleIssueId = parseInt(props.router.match.params.id);
+
+    if (singleIssueId) {
+      props.setCurrentIssueId(singleIssueId);
+    }
+  }, []);
   const currentIssue = props.issues[props.currentIssueId];
+
+  if (!currentIssue) {
+    return <h2>No issue selected</h2>;
+  }
+
   return (
     <RouteWrapper>
       <TopContainer>
@@ -82,4 +95,7 @@ const IssueBody = styled.div`
   margin-top: 10px;
 `;
 
-export default connect(mapStateToProps)(SingleIssueView);
+export default connect(
+  mapStateToProps,
+  { setCurrentIssueId }
+)(SingleIssueView);

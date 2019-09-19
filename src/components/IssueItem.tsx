@@ -4,12 +4,9 @@ import { SingleIssue } from 'reducers/issues.reducer';
 import { getPrettyOpenedOn } from 'utils/prettify';
 import { Link } from 'react-router-dom';
 import { SINGLE_ISSUE_URL } from 'constants/custom.constants';
-import { setCurrentIssueId } from 'actions/ui.actions';
-import { connect } from 'react-redux';
 
 interface UiSingleIssue extends SingleIssue {
   key: string;
-  setCurrentIssueId: any;
 }
 
 const IssueItem = (props: UiSingleIssue) => (
@@ -17,9 +14,7 @@ const IssueItem = (props: UiSingleIssue) => (
     <LeftContainer>
       <SubLeftContainer1>
         <IssueStateIcon />
-        <Link
-          to={SINGLE_ISSUE_URL}
-          onClick={() => props.setCurrentIssueId(props.id)}>
+        <Link to={SINGLE_ISSUE_URL + '/' + props.id}>
           <IssueLinkSpan>{props.title}</IssueLinkSpan>
         </Link>
       </SubLeftContainer1>
@@ -80,7 +75,4 @@ const SubLeftContainer2 = styled.div`
   }
 `;
 
-export default connect(
-  null,
-  { setCurrentIssueId }
-)(IssueItem);
+export default IssueItem;
