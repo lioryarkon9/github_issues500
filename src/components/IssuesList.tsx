@@ -7,9 +7,11 @@ const IssuesList = (props: any) => {
   const issuesList = Object.keys(props.issues)
     .map(issueId => props.issues[issueId])
     .sort(sortIssuesFunction);
+
   if (!issuesList.length) {
     return <div>No issues yet</div>;
   }
+
   return (
     <div>
       {issuesList.map(item => (

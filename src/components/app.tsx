@@ -28,7 +28,10 @@ class App extends React.Component<{}> {
               name="new-issue"
               component={NewIssueView}
             />
-            <Route path={'/' + SINGLE_ISSUE_URL} component={SingleIssueView} />
+            <Route
+              path={'/' + SINGLE_ISSUE_URL + '/:id'}
+              component={SingleIssueView}
+            />
             <Route
               path="/lazy"
               name="lazy"

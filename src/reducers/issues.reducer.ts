@@ -43,7 +43,7 @@ export const getIssuesObjectByList = (issuesArr: any[]): Issues => {
   }, {});
 };
 
-const initialState: Issues = getIssuesObjectByList(mockIssues); // {};
+const initialState: Issues = getIssuesObjectByList(mockIssues); //{}
 
 const issuesReducer = handleActions<Issues>(
   {

@@ -17,13 +17,11 @@ const IssueItem = (props: UiSingleIssue) => (
     <LeftContainer>
       <SubLeftContainer1>
         <IssueStateIcon />
-        <div>
-          <Link
-            to={SINGLE_ISSUE_URL}
-            onClick={e => props.setCurrentIssueId(props.id)}>
-            {props.title}
-          </Link>
-        </div>
+        <Link
+          to={SINGLE_ISSUE_URL}
+          onClick={() => props.setCurrentIssueId(props.id)}>
+          <IssueLinkSpan>{props.title}</IssueLinkSpan>
+        </Link>
       </SubLeftContainer1>
       <SubLeftContainer2>
         {props.number} {getPrettyOpenedOn(props.created_at)}
@@ -51,7 +49,7 @@ const LeftContainer = styled.div`
 const RightContainer = styled.div`
   ::before {
     // todo: replace with proper img
-    content: 'C';
+    content: '';
   }
 `;
 
@@ -65,6 +63,13 @@ const IssueStateIcon = styled.div`
   width: 1em;
   background-color: purple;
   margin-right: 5px;
+`;
+
+const IssueLinkSpan = styled.span`
+  color: black;
+  :hover {
+    color: dodgerblue;
+  }
 `;
 
 const SubLeftContainer2 = styled.div`
