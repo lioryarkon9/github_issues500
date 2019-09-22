@@ -29,6 +29,7 @@ export const setIssues = (issuesArr: [SingleIssue]) => ({
   payload: getIssuesObjectByList(issuesArr)
 });
 
-export const addNewIssue = () => ({
-  type: ADD_NEW_ISSUE
+export const addNewIssue = (title: string) => ({
+  type: ADD_NEW_ISSUE,
+  payload: title
 });

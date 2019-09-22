@@ -35,12 +35,13 @@ const SingleIssueView = (props: any) => {
           {currentIssue.state}
         </StateMockButton>
         <IssueInfo>
-          {currentIssue.user.login} opened this issue{' '}
-          {moment(currentIssue.created_at).fromNow()} &#183;{' '}
-          {currentIssue.comments}
+          guest opened this issue {moment(currentIssue.created_at).fromNow()}{' '}
+          &#183; {currentIssue.comments}
         </IssueInfo>
       </MiddleContainer>
-      <IssueBody>{currentIssue.body}</IssueBody>
+      <IssueBody>
+        {currentIssue.body ? currentIssue.body : 'No content yet'}
+      </IssueBody>
     </RouteWrapper>
   );
 };

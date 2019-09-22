@@ -43,7 +43,7 @@ export const getIssuesObjectByList = (issuesArr: any[]): Issues => {
   }, {});
 };
 
-const initialState: Issues = getIssuesObjectByList(mockIssues); //{}
+const initialState: Issues = {}; //getIssuesObjectByList(mockIssues);
 
 const issuesReducer = handleActions<Issues>(
   {
@@ -52,34 +52,18 @@ const issuesReducer = handleActions<Issues>(
     },
     [ADD_NEW_ISSUE]: (state, action) => {
       //todo: figure out what the {number} and {node_id} represent and how to get it
-      const nodeId = 'MDU6SXNzdWUzMTkxNDg3NTk=';
       const number = 2;
       const createDate = new Date();
       const id = Math.floor(Math.random() * 1000000000);
       return Object.assign({}, state, {
         [id]: {
-          url: `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/issues/${number}`,
-          repository_url: `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}`,
-          labels_url: `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/issues/${number}/labels{/name}`,
-          comments_url: `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/issues/${number}/comments`,
-          events_url: `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/issues/${number}/events`,
-          html_url: `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/issues/${number}`,
-          id: id,
-          node_id: nodeId,
           number: number,
-          title: '',
-          user: null,
-          labels: [],
+          id: id,
+          title: action.payload,
           state: 'open',
-          locked: false,
-          assignee: null,
-          assignees: [],
-          milestone: null,
           comments: 0,
           created_at: createDate,
           updated_at: createDate,
-          closed_at: null,
-          author_association: 'NONE',
           body: ''
         }
       });
