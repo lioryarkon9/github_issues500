@@ -11,28 +11,35 @@ const NewIssueView = ({ addNewIssue }: any) => {
   const [issueTitle, setIssueTitle] = useState('');
   return (
     <RouteWrapper>
+      <FormItemContainer>
+        <TitleSpan>Create New Issue</TitleSpan>
+      </FormItemContainer>
       <ItemsContainer>
-        <FromItemContainer>
+        <FormItemContainer>
           <TitleInput
             placeholder="Title"
             id="issue-title"
             value={issueTitle}
             onChange={e => setIssueTitle(e.currentTarget.value)}
           />
-        </FromItemContainer>
-        <FromItemContainer>
+        </FormItemContainer>
+        <FormItemContainer>
           <Link to={'/'} style={{ textDecoration: 'none' }}>
             <CreateButton onClick={e => addNewIssue(issueTitle)}>
               SAVE
             </CreateButton>
           </Link>
-        </FromItemContainer>
+        </FormItemContainer>
       </ItemsContainer>
     </RouteWrapper>
   );
 };
 
-const FromItemContainer = styled.div`
+const TitleSpan = styled.span`
+  font-size: 1.2em;
+`;
+
+const FormItemContainer = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 1%;

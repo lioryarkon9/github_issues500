@@ -46,16 +46,18 @@ const SingleIssueView = (props: any) => {
           />
         )}
       </IssueBody>
-      <FlexContainer>
-        <Link to={'/'} style={{ textDecoration: 'none' }}>
-          <CreateButton
-            onClick={e =>
-              props.updateIssueBody(singleIssueId.toString(), issueBody)
-            }>
-            UPDATE
-          </CreateButton>
-        </Link>
-      </FlexContainer>
+      {!currentIssue.body ? (
+        <FlexContainer>
+          <Link to={'/'} style={{ textDecoration: 'none' }}>
+            <CreateButton
+              onClick={e =>
+                props.updateIssueBody(singleIssueId.toString(), issueBody)
+              }>
+              UPDATE
+            </CreateButton>
+          </Link>
+        </FlexContainer>
+      ) : null}
     </RouteWrapper>
   );
 };

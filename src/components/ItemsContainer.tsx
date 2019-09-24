@@ -6,4 +6,5 @@ export default styled.div`
   border-radius: 3px;
   background-color: #fff;
   margin-top: 2%;
+  padding-bottom: 1%;
 `;
