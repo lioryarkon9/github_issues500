@@ -1,7 +1,8 @@
 // ---- issues ----
-export const FETCH_ISSUES_BY_OWNER_AND_REPO = 'fetch_issuesBy_owner_and_repo';
-export const SET_ISSUES_ARRAY_AS_OBJECT = 'set_issues_array_as_object';
-export const ADD_NEW_ISSUE = 'add_new_issue';
+export const FETCH_ISSUES_BY_OWNER_AND_REPO = 'FETCH_ISSUES_BY_OWNER_AND_REPO';
+export const SET_ISSUES_ARRAY_AS_OBJECT = 'SET_ISSUES_ARRAY_AS_OBJECT';
+export const ADD_NEW_ISSUE = 'ADD_NEW_ISSUE';
+export const UPDATE_ISSUE_BODY = 'UPDATE_ISSUE_BODY';
 
 // ---- ui ----
 export const SET_CURRENT_ISSUE_ID = 'set_current_issue_id';

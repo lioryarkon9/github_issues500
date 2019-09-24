@@ -6,9 +6,7 @@ import IssuesSelector from 'selectors/issues.selectors';
 
 const IssuesList = (props: any) => {
   console.info(props);
-  const issuesList = Object.keys(props.issues)
-    .map(issueId => props.issues[issueId])
-    .sort(sortIssuesFunction);
+  const issuesList = Object.values(props.issues).sort(sortIssuesFunction);
 
   if (!issuesList.length) {
     return <div>No issues yet</div>;
@@ -16,7 +14,7 @@ const IssuesList = (props: any) => {
 
   return (
     <div>
-      {issuesList.map(item => (
+      {issuesList.map((item: any) => (
         <IssueItem
           key={item.id.toString()}
           url={item.url}

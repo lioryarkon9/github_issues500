@@ -1,19 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import RouteWrapper from 'components/RouteWrapper';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { setCurrentIssueId } from 'actions/ui.actions';
+import CreateButton from 'components/CreateButton';
+import { updateIssueBody } from 'actions/issues.actions';
+import { Link } from 'react-router-dom';
 
 const SingleIssueView = (props: any) => {
-  useEffect(() => {
-    const singleIssueId = parseInt(props.router.match.params.id);
-
-    if (singleIssueId) {
-      props.setCurrentIssueId(singleIssueId);
-    }
-  }, []);
-  const currentIssue = props.issues[props.currentIssueId];
+  const singleIssueId = parseInt(props.router.match.params.id);
+  const currentIssue = props.issues[singleIssueId];
+  const [issueBody, setIssueBody] = useState('');
 
   if (!currentIssue) {
     return <h2>No issue selected</h2>;
@@ -40,16 +37,44 @@ const SingleIssueView = (props: any) => {
         </IssueInfo>
       </MiddleContainer>
       <IssueBody>
-        {currentIssue.body ? currentIssue.body : 'No content yet'}
+        {currentIssue.body ? (
+          currentIssue.body
+        ) : (
+          <IssueBodyTextArea
+            onChange={e => setIssueBody(e.currentTarget.value)}
+            value={issueBody}
+          />
+        )}
       </IssueBody>
+      <FlexContainer>
+        <Link to={'/'} style={{ textDecoration: 'none' }}>
+          <CreateButton
+            onClick={e =>
+              props.updateIssueBody(singleIssueId.toString(), issueBody)
+            }>
+            UPDATE
+          </CreateButton>
+        </Link>
+      </FlexContainer>
     </RouteWrapper>
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  issues: state.issues,
-  currentIssueId: state.ui.currentIssueId
-});
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const IssueBodyTextArea = styled.textarea`
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: none;
+  font-size: 1em;
+  :focus {
+    outline: none;
+  }
+`;
 
 const TopContainer = styled.div`
   display: flex;
@@ -96,7 +121,11 @@ const IssueBody = styled.div`
   margin-top: 10px;
 `;
 
+const mapStateToProps = (state: any) => ({
+  issues: state.issues
+});
+
 export default connect(
   mapStateToProps,
-  { setCurrentIssueId }
+  { updateIssueBody }
 )(SingleIssueView);
