@@ -5,4 +5,5 @@ export const ADD_NEW_ISSUE = 'ADD_NEW_ISSUE';
 export const UPDATE_ISSUE_BODY = 'UPDATE_ISSUE_BODY';
 
 // ---- ui ----
-export const SET_CURRENT_ISSUE_ID = 'set_current_issue_id';
+export const SET_CURRENT_ISSUE_ID = 'SET_CURRENT_ISSUE_ID';
+export const FILTER_ISSUES_BY_INPUT_VALUE = 'FILTER_ISSUES_BY_INPUT_VALUE';

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import IssueItem from 'components/IssueItem';
 import { sortIssuesFunction } from 'utils/prettify';
 import IssuesSelector from 'selectors/issues.selectors';
+import issuesSelector from 'selectors/issues.selectors';
 
 const IssuesList = (props: any) => {
-  console.info(props);
   const issuesList = Object.values(props.issues).sort(sortIssuesFunction);
 
   if (!issuesList.length) {
@@ -47,7 +47,7 @@ const IssuesList = (props: any) => {
 };
 
 const mapStateToProps = (state: any) => ({
-  issues: IssuesSelector(state)
+  issues: issuesSelector(state)
 });
 
 export default connect(mapStateToProps)(IssuesList);

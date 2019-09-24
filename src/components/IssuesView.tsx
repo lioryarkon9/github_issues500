@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import RouteWrapper from 'components/RouteWrapper';
@@ -8,6 +8,7 @@ import { fetchIssuesByOwnerAndRepo } from 'actions/issues.actions';
 import NewIssueButton from 'components/NewIssueButton';
 
 const IssuesView = (props: any) => {
+  const [filterByValue, setFilterByValue] = useState('');
   useEffect(() => {
     console.info('useEffect fired: uncomment the fetch method');
     //props.fetchIssuesByOwnerAndRepo();
@@ -17,7 +18,10 @@ const IssuesView = (props: any) => {
       <TopContainer>
         <SubContainerTop>
           <div>todo: filter</div>
-          <SearchInput />
+          <SearchInput
+            value={filterByValue}
+            onChange={e => setFilterByValue(e.currentTarget.value)}
+          />
           <ActionButtonType1>Labels</ActionButtonType1>
           <ActionButtonType1>Milestones</ActionButtonType1>
         </SubContainerTop>

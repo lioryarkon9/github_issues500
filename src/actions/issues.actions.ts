@@ -6,7 +6,7 @@ import {
   UPDATE_ISSUE_BODY
 } from 'constants/actionNames.constants';
 import { GITHUB_USER, GITHUB_REPO } from 'constants/custom.constants';
-import { getIssuesObjectByList, SingleIssue } from 'reducers/issues.reducer';
+import { SingleIssue } from 'reducers/issues.reducer';
 
 type IssueResponse = [SingleIssue];
 
@@ -27,7 +27,7 @@ export const fetchIssuesByOwnerAndRepo = (): ApiAction<IssueResponse> => {
 
 export const setIssues = (issuesArr: [SingleIssue]) => ({
   type: SET_ISSUES_ARRAY_AS_OBJECT,
-  payload: getIssuesObjectByList(issuesArr)
+  payload: issuesArr
 });
 
 export const addNewIssue = (title: string) => ({

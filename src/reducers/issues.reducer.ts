@@ -43,16 +43,20 @@ export const getIssuesObjectByList = (issuesArr: any[]): Issues => {
   }, {});
 };
 
-const initialState: Issues = getIssuesObjectByList(mockIssues);
+const initialState: Issues = {}; //getIssuesObjectByList(mockIssues);
 
 const issuesReducer = handleActions<Issues>(
   {
     [SET_ISSUES_ARRAY_AS_OBJECT]: (state, action) => {
-      return Object.assign({}, state, action.payload);
+      const issuesFromApi = getIssuesObjectByList(action.payload);
+      return {
+        ...state,
+        ...issuesFromApi
+      };
     },
     [ADD_NEW_ISSUE]: (state, action) => {
       //todo: figure out what the {number} and {node_id} represent and how to get it
-      const number = 2;
+      const number = Object.keys(state).length + 1;
       const createDate = new Date();
       const id = Math.floor(Math.random() * 1000000000);
       return Object.assign({}, state, {
