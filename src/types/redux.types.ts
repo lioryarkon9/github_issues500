@@ -4,4 +4,5 @@ import { Issues } from 'reducers/issues.reducer';
 export type State = {
   network: NetworkState;
   issues: Issues;
+  ui: any;
 };

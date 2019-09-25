@@ -2,19 +2,27 @@ import React from 'react';
 import { connect } from 'react-redux';
 import IssueItem from 'components/IssueItem';
 import { sortIssuesFunction } from 'utils/prettify';
-import IssuesSelector from 'selectors/issues.selectors';
+import IssuesSelector, {
+  issuesFilteredByInputChangeSelector
+} from 'selectors/issues.selectors';
 import issuesSelector from 'selectors/issues.selectors';
 
 const IssuesList = (props: any) => {
   const issuesList = Object.values(props.issues).sort(sortIssuesFunction);
+  const filteredIssuesList = Object.values(props.filteredIssues).sort(
+    sortIssuesFunction
+  );
+  const relevantIssues = filteredIssuesList.length
+    ? filteredIssuesList
+    : issuesList;
 
-  if (!issuesList.length) {
+  if (!relevantIssues.length) {
     return <div>No issues yet</div>;
   }
 
   return (
     <div>
-      {issuesList.map((item: any) => (
+      {relevantIssues.map((item: any) => (
         <IssueItem
           key={item.id.toString()}
           url={item.url}
@@ -47,7 +55,8 @@ const IssuesList = (props: any) => {
 };
 
 const mapStateToProps = (state: any) => ({
-  issues: issuesSelector(state)
+  issues: issuesSelector(state),
+  filteredIssues: issuesFilteredByInputChangeSelector(state)
 });
 
 export default connect(mapStateToProps)(IssuesList);

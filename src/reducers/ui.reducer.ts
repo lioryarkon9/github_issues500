@@ -1,31 +1,23 @@
 import { handleActions } from 'redux-actions';
 import { Issues, SingleIssue } from 'reducers/issues.reducer';
-//import { FILTER_ISSUES_BY_INPUT_VALUE } from 'actions/ui.actions';
+import { ON_CHANGE_FILTER_ISSUES_INPUT } from 'constants/actionNames.constants';
 
 export type UiReducer = {
-  filteredIssues?: SingleIssue[];
+  filterInputValue?: string;
 };
 
 const initialState: UiReducer = {
-  filteredIssues: []
+  filterInputValue: ''
 };
 
 const uiReducer = handleActions<UiReducer>(
   {
-    ['FILTER_ISSUES_BY_INPUT_VALUE']: (state, action) => {
-      const { filterValue, issues, allIssues } = action.payload;
-      const filteredList = Object.values(allIssues as Issues).filter(
-        (issue: SingleIssue) => {
-          const issueTitle = issue.title;
-          const paramRegex = new RegExp(`${filterValue}`);
-
-          return paramRegex.test(issueTitle);
-        }
-      );
+    [ON_CHANGE_FILTER_ISSUES_INPUT]: (state, action) => {
+      const { value } = action.payload;
 
       return {
         ...state,
-        filteredIssues: filteredList
+        filterInputValue: value
       };
     }
   },

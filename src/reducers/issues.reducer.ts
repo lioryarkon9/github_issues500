@@ -49,6 +49,7 @@ const issuesReducer = handleActions<Issues>(
   {
     [SET_ISSUES_ARRAY_AS_OBJECT]: (state, action) => {
       const issuesFromApi = getIssuesObjectByList(action.payload);
+
       return {
         ...state,
         ...issuesFromApi
@@ -59,6 +60,7 @@ const issuesReducer = handleActions<Issues>(
       const number = Object.keys(state).length + 1;
       const createDate = new Date();
       const id = Math.floor(Math.random() * 1000000000);
+
       return Object.assign({}, state, {
         [id]: {
           number: number,
@@ -73,8 +75,8 @@ const issuesReducer = handleActions<Issues>(
       });
     },
     [UPDATE_ISSUE_BODY]: (state, action) => {
-      debugger;
       const { issueId, updatedBody } = action.payload;
+
       return {
         ...state,
         [issueId]: {

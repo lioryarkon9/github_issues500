@@ -1,26 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import RouteWrapper from 'components/RouteWrapper';
 import IssuesList from 'components/IssuesList';
 import ItemsContainer from 'components/ItemsContainer';
 import { fetchIssuesByOwnerAndRepo } from 'actions/issues.actions';
+import { onChangeFilterInput } from 'actions/ui.actions';
 import NewIssueButton from 'components/NewIssueButton';
+import { State } from 'types/redux.types';
 
-const IssuesView = (props: any) => {
-  const [filterByValue, setFilterByValue] = useState('');
+const IssuesView = ({
+  filterInputValue,
+  fetchIssuesByOwnerAndRepo,
+  onChangeFilterInput
+}: any) => {
   useEffect(() => {
-    console.info('useEffect fired: uncomment the fetch method');
-    //props.fetchIssuesByOwnerAndRepo();
+    //console.info('useEffect fired: uncomment the fetch method');
+    fetchIssuesByOwnerAndRepo();
   }, []);
+
   return (
     <RouteWrapper>
       <TopContainer>
         <SubContainerTop>
           <div>todo: filter</div>
           <SearchInput
-            value={filterByValue}
-            onChange={e => setFilterByValue(e.currentTarget.value)}
+            value={filterInputValue}
+            onChange={e => onChangeFilterInput(e.currentTarget.value)}
           />
           <ActionButtonType1>Labels</ActionButtonType1>
           <ActionButtonType1>Milestones</ActionButtonType1>
@@ -90,7 +96,14 @@ const ItemsHeaderContainer = styled.div`
   border-bottom: 1px solid #d1d5da;
 `;
 
+const mapStateToProps = (state: State) => ({
+  filterInputValue: state.ui.filterInputValue
+});
+
 export default connect(
-  null,
-  { fetchIssuesByOwnerAndRepo }
+  mapStateToProps,
+  {
+    fetchIssuesByOwnerAndRepo,
+    onChangeFilterInput
+  }
 )(IssuesView);
