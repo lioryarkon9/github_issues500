@@ -1,16 +1,13 @@
 import { handleActions } from 'redux-actions';
-import { Issues, SingleIssue } from 'reducers/issues.reducer';
 import { ON_CHANGE_FILTER_ISSUES_INPUT } from 'constants/actionNames.constants';
+import { Ui } from 'types/redux.types';
 
-export type UiReducer = {
-  filterInputValue?: string;
-};
-
-const initialState: UiReducer = {
+const initialState: Ui = {
+  isDisplayLoader: false,
   filterInputValue: ''
 };
 
-const uiReducer = handleActions<UiReducer>(
+const uiReducer = handleActions<Ui>(
   {
     [ON_CHANGE_FILTER_ISSUES_INPUT]: (state, action) => {
       const { value } = action.payload;

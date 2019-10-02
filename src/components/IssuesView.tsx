@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import RouteWrapper from 'components/RouteWrapper';
-import IssuesList from 'components/IssuesList';
+//import IssuesList from 'components/IssuesList';
 import ItemsContainer from 'components/ItemsContainer';
 import { fetchIssuesByOwnerAndRepo } from 'actions/issues.actions';
 import { onChangeFilterInput } from 'actions/ui.actions';
@@ -15,8 +15,8 @@ const IssuesView = ({
   onChangeFilterInput
 }: any) => {
   useEffect(() => {
-    //console.info('useEffect fired: uncomment the fetch method');
-    fetchIssuesByOwnerAndRepo();
+    console.info('useEffect fired: uncomment the fetch method');
+    //fetchIssuesByOwnerAndRepo({user: "", repo: ""});
   }, []);
 
   return (
@@ -38,7 +38,6 @@ const IssuesView = ({
           <div>containerA</div>
           <div>ContainerB</div>
         </ItemsHeaderContainer>
-        <IssuesList />
       </ItemsContainer>
     </RouteWrapper>
   );

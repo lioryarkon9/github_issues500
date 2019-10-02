@@ -1,41 +1,47 @@
 import { ApiAction } from 'actions/api.actions';
-import {
-  FETCH_ISSUES_BY_OWNER_AND_REPO,
-  SET_ISSUES_ARRAY_AS_OBJECT,
-  ADD_NEW_ISSUE,
-  UPDATE_ISSUE_BODY
-} from 'constants/actionNames.constants';
+import * as actionNames from 'constants/actionNames.constants';
 import { GITHUB_USER, GITHUB_REPO } from 'constants/custom.constants';
-import { SingleIssue } from 'reducers/issues.reducer';
 
-type IssueResponse = [SingleIssue];
+type UserAndRepo = {
+  user: string;
+  repo: string;
+};
 
-export const fetchIssuesByOwnerAndRepo = (): ApiAction<IssueResponse> => {
+export const fetchIssuesByOwnerAndRepo = ({
+  user,
+  repo
+}: UserAndRepo): ApiAction<any> => {
+  debugger;
   return {
-    type: FETCH_ISSUES_BY_OWNER_AND_REPO,
+    type: actionNames.FETCH_ISSUES_BY_OWNER_AND_REPO,
     meta: { api: true },
     payload: {
-      path: `/repos/${GITHUB_USER}/${GITHUB_REPO}/issues`,
+      path: `/repos/${user ? user : GITHUB_USER}/${
+        repo ? repo : GITHUB_REPO
+      }/issues`,
       networkLabel: '',
       method: 'get',
-      onError: error => console.error('error: ', error),
-      onSuccess: (data: IssueResponse) => setIssues(data),
+      onError: error => {
+        console.error('ERROR FETCHING ISSUES: ', error);
+        window.alert('something went wrong! try again');
+      },
+      onSuccess: (data: any) => setIssues(data),
       baseUrl: 'https://api.github.com'
     }
   };
 };
 
-export const setIssues = (issuesArr: [SingleIssue]) => ({
-  type: SET_ISSUES_ARRAY_AS_OBJECT,
-  payload: issuesArr
+export const setIssues = (issuesList: [any]) => ({
+  type: actionNames.SET_ISSUES,
+  payload: issuesList
 });
 
 export const addNewIssue = (title: string) => ({
-  type: ADD_NEW_ISSUE,
+  type: actionNames.ADD_NEW_ISSUE,
   payload: title
 });
 
 export const updateIssueBody = (issueId: string, updatedBody: string) => ({
-  type: UPDATE_ISSUE_BODY,
+  type: actionNames.UPDATE_ISSUE_BODY,
   payload: { issueId, updatedBody }
 });

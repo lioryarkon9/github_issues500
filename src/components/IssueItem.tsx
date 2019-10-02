@@ -1,15 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { SingleIssue } from 'reducers/issues.reducer';
+//import { SingleIssue } from 'reducers/issues.reducer';
 import { getPrettyOpenedOn } from 'utils/prettify';
 import { Link } from 'react-router-dom';
 import { SINGLE_ISSUE_URL } from 'constants/custom.constants';
 
-interface UiSingleIssue extends SingleIssue {
-  key: string;
-}
-
-const IssueItem = (props: UiSingleIssue) => (
+const IssueItem = (props: any) => (
   <StyledIssue>
     <LeftContainer>
       <SubLeftContainer1>
