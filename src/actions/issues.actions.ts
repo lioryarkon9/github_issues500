@@ -11,7 +11,6 @@ export const fetchIssuesByOwnerAndRepo = ({
   user,
   repo
 }: UserAndRepo): ApiAction<any> => {
-  debugger;
   return {
     type: actionNames.FETCH_ISSUES_BY_OWNER_AND_REPO,
     meta: { api: true },

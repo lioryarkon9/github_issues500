@@ -1,6 +1,10 @@
 import { handleActions } from 'redux-actions';
 import { ON_CHANGE_FILTER_ISSUES_INPUT } from 'constants/actionNames.constants';
-import { Ui } from 'types/redux.types';
+
+export type Ui = {
+  isDisplayLoader: boolean;
+  filterInputValue: string;
+};
 
 const initialState: Ui = {
   isDisplayLoader: false,

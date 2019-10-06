@@ -1,16 +1,11 @@
 import { NetworkState } from 'reducers/network.reducer';
-
-export type Issues = {
-  [id: number]: any;
-};
-
-export type Ui = {
-  isDisplayLoader: boolean;
-  filterInputValue?: string;
-};
+import { Ui } from 'reducers/ui.reducer';
+import { Issues } from 'reducers/issues.reducer';
+import { CurrentUser } from 'reducers/currentUser';
 
 export type State = {
   network: NetworkState;
-  issues: [Issues];
+  issues: Issues;
   ui: Ui;
+  currentUser: CurrentUser;
 };

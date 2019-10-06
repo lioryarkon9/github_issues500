@@ -9,4 +9,4 @@ export const SET_CURRENT_ISSUE_ID = 'SET_CURRENT_ISSUE_ID';
 export const ON_CHANGE_FILTER_ISSUES_INPUT = 'ON_CHANGE_FILTER_ISSUES_INPUT';
 
 // ---- current user ----
-export const LOGIN = 'LOGIN';
+export const SET_USER_DETAILS = 'SET_USER_DETAILS';

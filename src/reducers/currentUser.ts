@@ -1,16 +1,17 @@
 import { handleActions } from 'redux-actions';
-import { LOGIN } from 'constants/actionNames.constants';
 
-const currentUserReducer = handleActions<any>(
+export type CurrentUser = null | any;
+
+const initialState = null;
+
+const currentUser = handleActions<CurrentUser>(
   {
-    LOGIN: (state, action) => {
-      const { user } = action.payload;
-
-      return { user };
+    SET_USER_DETAILS: (state, action) => {
+      return action.payload;
     }
   },
 
-  null
+  initialState
 );
 
-export default currentUserReducer;
+export default currentUser;

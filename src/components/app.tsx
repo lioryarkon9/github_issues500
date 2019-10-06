@@ -21,8 +21,8 @@ class App extends React.Component<{}> {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <Router history={history}>
-            <Route exact path="/" name="sample" component={IssuesView} />
-            <Route path="/login" component={LoginView} />
+            <Route exact path="/" component={IssuesView} />
+            <Route path="/login:code?" component={LoginView} />
             <Route
               path={'/' + NEW_ISSUE_URL}
               name="new-issue"
