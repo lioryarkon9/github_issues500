@@ -1,13 +1,13 @@
 import { handleActions } from 'redux-actions';
 
-export type CurrentUser = null | any;
+export type CurrentUser = any;
 
 const initialState = null;
 
 const currentUser = handleActions<CurrentUser>(
   {
     SET_USER_DETAILS: (state, action) => {
-      return action.payload;
+      return Object.assign({}, action.payload);
     }
   },
 

@@ -1,33 +1,36 @@
-import {get, castArray, compact} from 'lodash/fp';
+import { get, castArray, compact } from 'lodash/fp';
 import urljoin from 'url-join';
-import {Dispatch, Store, ActionCreator} from 'redux';
+import { Dispatch, Store, ActionCreator } from 'redux';
 
 import apiUtils from 'utils/api.utils';
-import {startNetwork, endNetwork} from 'actions/network.actions';
-import {BaseAction} from 'types/base-redux.types';
-import {State} from 'types/redux.types';
-import {BASE_URL} from 'constants/config';
+import { startNetwork, endNetwork } from 'actions/network.actions';
+import { BaseAction } from 'types/base-redux.types';
+import { State } from 'types/redux.types';
+import { BASE_URL } from 'constants/config';
 import * as logger from 'utils/logger';
+import { FETCH_REPOS } from 'constants/actionNames.constants';
 
 export function dispatchActions(
   dispatch: Dispatch<BaseAction>,
   actionCreators: ActionCreator<BaseAction> | ActionCreator<BaseAction>[],
   response: any
 ) {
-  compact(castArray(actionCreators)).forEach((actionCreator: ActionCreator<BaseAction>) => {
-    const action = actionCreator(response);
+  compact(castArray(actionCreators)).forEach(
+    (actionCreator: ActionCreator<BaseAction>) => {
+      const action = actionCreator(response);
 
-    return action && dispatch(action);
-  });
+      return action && dispatch(action);
+    }
+  );
 }
 
-export function apiMiddleware({dispatch}: Store<State>) {
+export function apiMiddleware({ dispatch }: Store<State>) {
   return (next: Dispatch<BaseAction>) => async (action: BaseAction) => {
     if (!get('meta.api', action)) {
       return next(action);
     }
 
-    const {payload} = action;
+    const { payload } = action;
     const {
       path,
       baseUrl,
@@ -40,10 +43,12 @@ export function apiMiddleware({dispatch}: Store<State>) {
     const headers: { [key: string]: string } = {};
     const requestUrl = urljoin(baseUrl || BASE_URL, path);
 
-    // TODO: if using token authentication
-    // if (getState().auth) {
-    //   headers['Authorization'] = getState().auth.token;
-    // }
+    // cannot properly apply api middleware from here
+    if (action.type === FETCH_REPOS) {
+      headers['Authorization'] = `token ${window.sessionStorage.getItem(
+        '_token'
+      )}`;
+    }
 
     next(action);
     dispatch(startNetwork(networkLabel));

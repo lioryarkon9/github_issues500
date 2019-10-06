@@ -4,6 +4,10 @@ export const SET_ISSUES = 'SET_ISSUES';
 export const ADD_NEW_ISSUE = 'ADD_NEW_ISSUE';
 export const UPDATE_ISSUE_BODY = 'UPDATE_ISSUE_BODY';
 
+// ---- repos ----
+export const SET_REPOS = 'SET_REPOS';
+export const FETCH_REPOS = 'FETCH_REPOS';
+
 // ---- ui ----
 export const SET_CURRENT_ISSUE_ID = 'SET_CURRENT_ISSUE_ID';
 export const ON_CHANGE_FILTER_ISSUES_INPUT = 'ON_CHANGE_FILTER_ISSUES_INPUT';

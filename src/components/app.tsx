@@ -8,12 +8,10 @@ import history from 'utils/history.utils';
 import lazyLoad from 'utils/lazy-load.utils';
 import store from 'store';
 import theme from 'constants/themes.constants';
-
-import IssuesView from 'components/IssuesView';
-import { NEW_ISSUE_URL, SINGLE_ISSUE_URL } from 'constants/custom.constants';
 import NewIssueView from 'components/NewIssueView';
 import SingleIssueView from 'components/SingleIssueView';
 import LoginView from 'components/LoginView';
+import ReposView from 'components/ReposView';
 
 class App extends React.Component<{}> {
   render() {
@@ -21,15 +19,11 @@ class App extends React.Component<{}> {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <Router history={history}>
-            <Route exact path="/" component={IssuesView} />
             <Route path="/login:code?" component={LoginView} />
+            <Route path="/repos" component={ReposView} />
+            <Route path="/new_issue" component={NewIssueView} />
             <Route
-              path={'/' + NEW_ISSUE_URL}
-              name="new-issue"
-              component={NewIssueView}
-            />
-            <Route
-              path={'/' + SINGLE_ISSUE_URL + '/:id'}
+              path={'/single_issue/:id'}
               component={(router: any) => <SingleIssueView router={router} />}
             />
             <Route

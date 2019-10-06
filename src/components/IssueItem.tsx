@@ -1,16 +1,14 @@
 import React from 'react';
 import styled from '@emotion/styled';
-//import { SingleIssue } from 'reducers/issues.reducer';
 import { getPrettyOpenedOn } from 'utils/prettify';
 import { Link } from 'react-router-dom';
-import { SINGLE_ISSUE_URL } from 'constants/custom.constants';
 
 const IssueItem = (props: any) => (
   <StyledIssue>
     <LeftContainer>
       <SubLeftContainer1>
         <IssueStateIcon />
-        <Link to={SINGLE_ISSUE_URL + '/' + props.id}>
+        <Link to={`single_issue/${props.id}`}>
           <IssueLinkSpan>{props.title}</IssueLinkSpan>
         </Link>
       </SubLeftContainer1>

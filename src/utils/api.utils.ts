@@ -12,7 +12,7 @@ export type Request = {
 const apiUtils = {
   request({ method, url, data = null, headers = {} }: Request) {
     const request = superagent(method, url).set('Accept', 'application/json');
-    // .withCredentials();
+    //.withCredentials();
 
     if (data) {
       if (method.toUpperCase() === 'GET') {

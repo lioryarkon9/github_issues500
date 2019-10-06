@@ -6,20 +6,12 @@ import { connect } from 'react-redux';
 import { State } from 'types/redux.types';
 import { Redirect } from 'react-router';
 
-const LoginView = ({
-  location,
-  currentUser,
-  setUserDetails: setUserDetailsRename
-}: any) => {
+const LoginView = ({ location, currentUser, setUserDetails: setUser }: any) => {
   const gitHubUrl =
     'https://github.com/login/oauth/authorize?client_id=3f7df47dee6d4bfe0466';
   const [url, code] = location.search.split('=');
 
-  console.log('currentUser: ', currentUser);
-  console.log('setUSerDetails: ', setUserDetails);
-
   useEffect(() => {
-    console.info('useEffect running');
     if (code) {
       fetch(`https://gatekeeper-test2.herokuapp.com/authenticate/${code}`).then(
         httpResponse => {
@@ -32,7 +24,7 @@ const LoginView = ({
                 }
               }).then(httpResponse => {
                 httpResponse.json().then(jsonResponse => {
-                  setUserDetailsRename(jsonResponse);
+                  setUser(jsonResponse);
                 });
               });
             }
@@ -43,7 +35,7 @@ const LoginView = ({
   }, [code]);
 
   if (currentUser) {
-    return <Redirect to="/" />;
+    return <Redirect to="/repos" />;
   }
 
   return (
