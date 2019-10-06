@@ -3,20 +3,20 @@ import styled from '@emotion/styled';
 import { getPrettyOpenedOn } from 'utils/prettify';
 import { Link } from 'react-router-dom';
 
-const IssueItem = (props: any) => (
+const IssueItem = ({ id, title, number, created_at, comments }: any) => (
   <StyledIssue>
     <LeftContainer>
       <SubLeftContainer1>
         <IssueStateIcon />
-        <Link to={`single_issue/${props.id}`}>
-          <IssueLinkSpan>{props.title}</IssueLinkSpan>
+        <Link to={`/single_issue/${id}`}>
+          <IssueLinkSpan>{title}</IssueLinkSpan>
         </Link>
       </SubLeftContainer1>
       <SubLeftContainer2>
-        {props.number} {getPrettyOpenedOn(props.created_at)}
+        {number} {getPrettyOpenedOn(created_at)}
       </SubLeftContainer2>
     </LeftContainer>
-    <RightContainer>{props.comments}</RightContainer>
+    <RightContainer>{comments}</RightContainer>
   </StyledIssue>
 );
 

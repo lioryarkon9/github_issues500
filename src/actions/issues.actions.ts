@@ -1,6 +1,5 @@
 import { ApiAction } from 'actions/api.actions';
 import * as actionNames from 'constants/actionNames.constants';
-import { GITHUB_USER, GITHUB_REPO } from 'constants/custom.constants';
 
 type UserAndRepo = {
   user: string;
@@ -15,9 +14,7 @@ export const fetchIssuesByOwnerAndRepo = ({
     type: actionNames.FETCH_ISSUES_BY_OWNER_AND_REPO,
     meta: { api: true },
     payload: {
-      path: `/repos/${user ? user : GITHUB_USER}/${
-        repo ? repo : GITHUB_REPO
-      }/issues`,
+      path: `/repos/${user}/${repo}/issues`,
       networkLabel: '',
       method: 'get',
       onError: error => {

@@ -12,6 +12,7 @@ import NewIssueView from 'components/NewIssueView';
 import SingleIssueView from 'components/SingleIssueView';
 import LoginView from 'components/LoginView';
 import ReposView from 'components/ReposView';
+import IssuesView from 'components/IssuesView';
 
 class App extends React.Component<{}> {
   render() {
@@ -21,6 +22,11 @@ class App extends React.Component<{}> {
           <Router history={history}>
             <Route path="/login:code?" component={LoginView} />
             <Route path="/repos" component={ReposView} />
+            <Route
+              path="/issues/:repo_name"
+              component={(router: any) => <IssuesView router={router} />}
+            />
+
             <Route path="/new_issue" component={NewIssueView} />
             <Route
               path={'/single_issue/:id'}

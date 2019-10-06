@@ -2,54 +2,73 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import RouteWrapper from 'components/RouteWrapper';
-//import IssuesList from 'components/IssuesList';
 import ItemsContainer from 'components/ItemsContainer';
 import { fetchIssuesByOwnerAndRepo } from 'actions/issues.actions';
-import { onChangeFilterInput } from 'actions/ui.actions';
 import NewIssueButton from 'components/NewIssueButton';
 import { State } from 'types/redux.types';
+import { values } from 'lodash/fp';
+import IssueItem from 'components/IssueItem';
+import { Redirect } from 'react-router';
 
 const IssuesView = ({
-  filterInputValue,
-  fetchIssuesByOwnerAndRepo,
-  onChangeFilterInput
+  fetchIssuesByOwnerAndRepo: fetchIssues,
+  router,
+  currentUser,
+  issues
 }: any) => {
+  const { params } = router.match;
+  const repoName = params['repo_name'];
+  const { login: userName } = currentUser;
+  const issuesList = values(issues);
+
   useEffect(() => {
-    console.info('useEffect fired: uncomment the fetch method');
-    //fetchIssuesByOwnerAndRepo({user: "", repo: ""});
+    fetchIssues({ user: userName, repo: repoName });
   }, []);
+
+  if (!currentUser) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <RouteWrapper>
-      <TopContainer>
-        <SubContainerTop>
+      <FlexBetween>
+        <Flex>
           <div>todo: filter</div>
-          <SearchInput
-            value={filterInputValue}
-            onChange={e => onChangeFilterInput(e.currentTarget.value)}
-          />
-          <ActionButtonType1>Labels</ActionButtonType1>
-          <ActionButtonType1>Milestones</ActionButtonType1>
-        </SubContainerTop>
+          <SearchInput />
+          <ActionButtonPrimary>Labels</ActionButtonPrimary>
+          <ActionButtonPrimary>Milestones</ActionButtonPrimary>
+        </Flex>
         <NewIssueButton />
-      </TopContainer>
+      </FlexBetween>
       <ItemsContainer>
         <ItemsHeaderContainer>
           <div>containerA</div>
           <div>ContainerB</div>
         </ItemsHeaderContainer>
+        {issuesList.length
+          ? issuesList.map((issue: any) => (
+              <IssueItem
+                key={issue.id.toString()}
+                id={issue.id}
+                title={issue.title}
+                number={issue.number}
+                created_at={issue.created_at}
+                comments={issue.comments}
+              />
+            ))
+          : 'No issues yet'}
       </ItemsContainer>
     </RouteWrapper>
   );
 };
 
-const TopContainer = styled.div`
+const FlexBetween = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-const SubContainerTop = styled.div`
+const Flex = styled.div`
   display: flex;
 `;
 
@@ -69,7 +88,7 @@ const SearchInput = styled.input`
   font-size: 1.1em;
 `;
 
-const ActionButtonType1 = styled.div`
+const ActionButtonPrimary = styled.div`
   min-width: 100px;
   height: 30px;
   color: #586069;
@@ -96,13 +115,13 @@ const ItemsHeaderContainer = styled.div`
 `;
 
 const mapStateToProps = (state: State) => ({
-  filterInputValue: state.ui.filterInputValue
+  currentUser: state.currentUser,
+  issues: state.issues
 });
 
 export default connect(
   mapStateToProps,
   {
-    fetchIssuesByOwnerAndRepo,
-    onChangeFilterInput
+    fetchIssuesByOwnerAndRepo
   }
 )(IssuesView);

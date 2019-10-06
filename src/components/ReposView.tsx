@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { values } from 'lodash/fp';
 import styled from '@emotion/styled';
 import RouteWrapper from 'components/RouteWrapper';
+import { Link, Redirect } from 'react-router-dom';
 
-const ReposView = ({ repos, fetchRepos, setRepos }: any) => {
+const ReposView = ({ currentUser, repos, setRepos }: any) => {
   const reposList = values(repos);
 
   useEffect(() => {
@@ -22,6 +23,10 @@ const ReposView = ({ repos, fetchRepos, setRepos }: any) => {
     });
   }, []);
 
+  if (!currentUser) {
+    return <Redirect to="/login" />;
+  }
+
   if (!reposList.length) {
     return <h2>No repos yet</h2>;
   }
@@ -30,9 +35,14 @@ const ReposView = ({ repos, fetchRepos, setRepos }: any) => {
     <RouteWrapper>
       <ReposGrid>
         {reposList.map(repo => (
-          <Repo key={repo.id}>
-            <RepoName>{repo.name}</RepoName>
-          </Repo>
+          <Link
+            style={{ textDecoration: 'none' }}
+            key={repo.id}
+            to={`issues/${repo.name}`}>
+            <Repo>
+              <RepoName>{repo.name}</RepoName>
+            </Repo>
+          </Link>
         ))}
       </ReposGrid>
     </RouteWrapper>
@@ -63,6 +73,7 @@ const ReposGrid = styled.div`
 `;
 
 const mapStateToProps = (state: State) => ({
+  currentUser: state.currentUser,
   repos: state.repos
 });
 

@@ -7,9 +7,9 @@ import CreateButton from 'components/CreateButton';
 import { updateIssueBody } from 'actions/issues.actions';
 import { Link } from 'react-router-dom';
 
-const SingleIssueView = (props: any) => {
-  const singleIssueId = parseInt(props.router.match.params.id);
-  const currentIssue = props.issues[singleIssueId];
+const SingleIssueView = ({ router, issues, updateIssueBody }: any) => {
+  const singleIssueId = parseInt(router.match.params.id);
+  const currentIssue = issues[singleIssueId];
   const [issueBody, setIssueBody] = useState('');
 
   if (!currentIssue) {
@@ -51,7 +51,7 @@ const SingleIssueView = (props: any) => {
           <Link to={'/'} style={{ textDecoration: 'none' }}>
             <CreateButton
               onClick={e =>
-                props.updateIssueBody(singleIssueId.toString(), issueBody)
+                updateIssueBody(singleIssueId.toString(), issueBody)
               }>
               UPDATE
             </CreateButton>
