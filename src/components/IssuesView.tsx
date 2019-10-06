@@ -18,12 +18,12 @@ const IssuesView = ({
 }: any) => {
   const { params } = router.match;
   const repoName = params['repo_name'];
-  const { login: userName } = currentUser;
+  const userName = currentUser ? currentUser.login : '';
   const issuesList = values(issues);
 
   useEffect(() => {
     fetchIssues({ user: userName, repo: repoName });
-  }, []);
+  }, [repoName, userName]);
 
   if (!currentUser) {
     return <Redirect to="/login" />;

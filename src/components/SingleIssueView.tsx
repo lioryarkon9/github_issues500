@@ -3,17 +3,14 @@ import RouteWrapper from 'components/RouteWrapper';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import CreateButton from 'components/CreateButton';
-import { updateIssueBody } from 'actions/issues.actions';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 
-const SingleIssueView = ({ router, issues, updateIssueBody }: any) => {
+const SingleIssueView = ({ router, issues }: any) => {
   const singleIssueId = parseInt(router.match.params.id);
   const currentIssue = issues[singleIssueId];
-  const [issueBody, setIssueBody] = useState('');
 
   if (!currentIssue) {
-    return <h2>No issue selected</h2>;
+    return <Redirect to="/login" />;
   }
 
   return (
@@ -36,47 +33,10 @@ const SingleIssueView = ({ router, issues, updateIssueBody }: any) => {
           &#183; {currentIssue.comments}
         </IssueInfo>
       </MiddleContainer>
-      <IssueBody>
-        {currentIssue.body ? (
-          currentIssue.body
-        ) : (
-          <IssueBodyTextArea
-            onChange={e => setIssueBody(e.currentTarget.value)}
-            value={issueBody}
-          />
-        )}
-      </IssueBody>
-      {!currentIssue.body ? (
-        <FlexContainer>
-          <Link to={'/'} style={{ textDecoration: 'none' }}>
-            <CreateButton
-              onClick={e =>
-                updateIssueBody(singleIssueId.toString(), issueBody)
-              }>
-              UPDATE
-            </CreateButton>
-          </Link>
-        </FlexContainer>
-      ) : null}
+      <IssueBody>{currentIssue.body}</IssueBody>
     </RouteWrapper>
   );
 };
-
-const FlexContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const IssueBodyTextArea = styled.textarea`
-  width: 100%;
-  height: 100%;
-  resize: none;
-  border: none;
-  font-size: 1em;
-  :focus {
-    outline: none;
-  }
-`;
 
 const TopContainer = styled.div`
   display: flex;
@@ -127,7 +87,4 @@ const mapStateToProps = (state: any) => ({
   issues: state.issues
 });
 
-export default connect(
-  mapStateToProps,
-  { updateIssueBody }
-)(SingleIssueView);
+export default connect(mapStateToProps)(SingleIssueView);

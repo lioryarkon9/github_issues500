@@ -13,10 +13,7 @@ const issuesReducer = handleActions<Issues>(
     [actionNames.SET_ISSUES]: (state, action) => {
       const issuesList = action.payload;
 
-      return {
-        ...state,
-        ...keyBy('id', issuesList)
-      };
+      return keyBy('id', issuesList);
     },
 
     [actionNames.ADD_NEW_ISSUE]: (state, action) => {
