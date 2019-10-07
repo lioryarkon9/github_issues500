@@ -32,10 +32,35 @@ export const setIssues = (issuesList: [any]) => ({
   payload: issuesList
 });
 
-export const addNewIssue = (title: string) => ({
+export const addNewIssue = ({
+  issueTitle: title,
+  issueBody: body,
+  userName,
+  repoName
+}: any): ApiAction<any> => ({
   type: actionNames.ADD_NEW_ISSUE,
-  payload: title
+  meta: { api: true },
+  payload: {
+    path: `/repos/${userName}/${repoName}/issues`,
+    baseUrl: 'https://api.github.com',
+    method: 'post',
+    networkLabel: '',
+    data: JSON.stringify({ title, body, labels: [] }),
+    onError: error => {
+      console.error('ERROR ADDING ISSUE', error);
+      window.alert('something was wrong. try again');
+    },
+    onSuccess: (data: any) => onSuccessAddNewIssue(data)
+  }
 });
+
+const onSuccessAddNewIssue = ({ title }: any) => {
+  window.alert(`issue ${title} added successfully`);
+
+  return {
+    type: 'ON_SUCCESS_ADD_NEW_ISSUE'
+  };
+};
 
 export const updateIssueBody = (issueId: string, updatedBody: string) => ({
   type: actionNames.UPDATE_ISSUE_BODY,

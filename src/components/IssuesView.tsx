@@ -18,7 +18,12 @@ const IssuesView = ({
 }: any) => {
   const repoName = router.match.params['repo_name'];
   const userName = currentUser ? currentUser.login : '';
-  const issuesList = values(issues);
+  const issuesList = values(issues).sort((a, b) => {
+    const numberA = a.number;
+    const numberB = b.number;
+
+    return numberB - numberA;
+  });
 
   useEffect(() => {
     fetchIssues({ user: userName, repo: repoName });

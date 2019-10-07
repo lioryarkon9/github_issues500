@@ -12,11 +12,11 @@ const LoginView = ({
   fetchToken: fetchTokenByCodeAndGetUserDetails
 }: any) => {
   const gitHubUrl =
-    'https://github.com/login/oauth/authorize?client_id=3f7df47dee6d4bfe0466';
+    'https://github.com/login/oauth/authorize?client_id=3f7df47dee6d4bfe0466&scope=repo';
   const [url, code] = location.search.split('=');
 
   useEffect(() => {
-    if (code) {
+    if (code && !currentUser) {
       fetchTokenByCodeAndGetUserDetails(code);
     }
   }, [code]);

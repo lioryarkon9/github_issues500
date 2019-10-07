@@ -5,30 +5,13 @@ import RouteWrapper from 'components/RouteWrapper';
 import ItemsContainer from 'components/ItemsContainer';
 import CreateButton from 'components/CreateButton';
 import { State } from 'types/redux.types';
+import { addNewIssue } from 'actions/issues.actions';
 
-const NewIssueView = ({ router, currentUser }: any) => {
+const NewIssueView = ({ router, currentUser, addNewIssue }: any) => {
   const { login: userName } = currentUser;
   const repoName = router.match.params['repo_name'];
   const [issueTitle, setIssueTitle] = useState('');
   const [issueBody, setIssueBody] = useState('');
-  const addNewIssue = () => {
-    fetch(`https://api.github.com/repos/${userName}/${repoName}/issues`, {
-      method: 'POST',
-      headers: {
-        Authorization: `token ${window.sessionStorage.getItem('_token')}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        title: issueTitle,
-        body: issueBody,
-        labels: []
-      })
-    }).then(httpResponse => {
-      httpResponse.json().then(jsonResponse => {
-        console.info('jsonResponse: ', jsonResponse);
-      });
-    });
-  };
 
   return (
     <RouteWrapper>
@@ -52,7 +35,12 @@ const NewIssueView = ({ router, currentUser }: any) => {
           />
         </FormItemContainer>
         <FormItemContainer>
-          <CreateButton onClick={() => addNewIssue()}>SAVE</CreateButton>
+          <CreateButton
+            onClick={() =>
+              addNewIssue({ issueTitle, issueBody, userName, repoName })
+            }>
+            SAVE
+          </CreateButton>
         </FormItemContainer>
       </ItemsContainer>
     </RouteWrapper>
@@ -92,4 +80,7 @@ const mapStateToProps = (state: State) => ({
   currentUser: state.currentUser
 });
 
-export default connect(mapStateToProps)(NewIssueView);
+export default connect(
+  mapStateToProps,
+  { addNewIssue }
+)(NewIssueView);
