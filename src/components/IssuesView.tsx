@@ -16,14 +16,13 @@ const IssuesView = ({
   currentUser,
   issues
 }: any) => {
-  const { params } = router.match;
-  const repoName = params['repo_name'];
+  const repoName = router.match.params['repo_name'];
   const userName = currentUser ? currentUser.login : '';
   const issuesList = values(issues);
 
   useEffect(() => {
     fetchIssues({ user: userName, repo: repoName });
-  }, [repoName, userName]);
+  }, []);
 
   if (!currentUser) {
     return <Redirect to="/login" />;
@@ -38,7 +37,7 @@ const IssuesView = ({
           <ActionButtonPrimary>Labels</ActionButtonPrimary>
           <ActionButtonPrimary>Milestones</ActionButtonPrimary>
         </Flex>
-        <NewIssueButton />
+        <NewIssueButton repoName={repoName} />
       </FlexBetween>
       <ItemsContainer>
         <ItemsHeaderContainer>

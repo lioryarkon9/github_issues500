@@ -8,7 +8,6 @@ import { BaseAction } from 'types/base-redux.types';
 import { State } from 'types/redux.types';
 import { BASE_URL } from 'constants/config';
 import * as logger from 'utils/logger';
-import { FETCH_REPOS } from 'constants/actionNames.constants';
 
 export function dispatchActions(
   dispatch: Dispatch<BaseAction>,
@@ -43,8 +42,7 @@ export function apiMiddleware({ dispatch }: Store<State>) {
     const headers: { [key: string]: string } = {};
     const requestUrl = urljoin(baseUrl || BASE_URL, path);
 
-    // cannot properly apply api middleware from here
-    if (action.type === FETCH_REPOS) {
+    if (action.payload.baseUrl === 'https://api.github.com') {
       headers['Authorization'] = `token ${window.sessionStorage.getItem(
         '_token'
       )}`;

@@ -30,7 +30,10 @@ class App extends React.Component<{}> {
               path={'/single_issue/:id'}
               component={(router: any) => <SingleIssueView router={router} />}
             />
-            <Route path="/new_issue" component={NewIssueView} />
+            <Route
+              path="/new_issue/:repo_name"
+              component={(router: any) => <NewIssueView router={router} />}
+            />
             <Route
               path="/lazy"
               component={lazyLoad(() => import('sample/lazy'))}

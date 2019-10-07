@@ -1,14 +1,35 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { addNewIssue } from 'actions/issues.actions';
 import styled from '@emotion/styled';
 import RouteWrapper from 'components/RouteWrapper';
 import ItemsContainer from 'components/ItemsContainer';
 import CreateButton from 'components/CreateButton';
-import { Link } from 'react-router-dom';
+import { State } from 'types/redux.types';
 
-const NewIssueView = ({ addNewIssue }: any) => {
+const NewIssueView = ({ router, currentUser }: any) => {
+  const { login: userName } = currentUser;
+  const repoName = router.match.params['repo_name'];
   const [issueTitle, setIssueTitle] = useState('');
+  const [issueBody, setIssueBody] = useState('');
+  const addNewIssue = () => {
+    fetch(`https://api.github.com/repos/${userName}/${repoName}/issues`, {
+      method: 'POST',
+      headers: {
+        Authorization: `token ${window.sessionStorage.getItem('_token')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title: issueTitle,
+        body: issueBody,
+        labels: []
+      })
+    }).then(httpResponse => {
+      httpResponse.json().then(jsonResponse => {
+        console.info('jsonResponse: ', jsonResponse);
+      });
+    });
+  };
+
   return (
     <RouteWrapper>
       <FormItemContainer>
@@ -24,16 +45,29 @@ const NewIssueView = ({ addNewIssue }: any) => {
           />
         </FormItemContainer>
         <FormItemContainer>
-          <Link to={'/'} style={{ textDecoration: 'none' }}>
-            <CreateButton onClick={e => addNewIssue(issueTitle)}>
-              SAVE
-            </CreateButton>
-          </Link>
+          <TextArea
+            onChange={e => setIssueBody(e.currentTarget.value)}
+            value={issueBody}
+            placeholder="Leave a comment..."
+          />
+        </FormItemContainer>
+        <FormItemContainer>
+          <CreateButton onClick={() => addNewIssue()}>SAVE</CreateButton>
         </FormItemContainer>
       </ItemsContainer>
     </RouteWrapper>
   );
 };
+
+const TextArea = styled.textarea`
+  width: 80%;
+  background-color: #fafbfc;
+  border-radius: 3px;
+  height: 6em;
+  padding: 0 5px 0 5px;
+  font-size: 1.1em;
+  resize: none;
+`;
 
 const TitleSpan = styled.span`
   font-size: 1.2em;
@@ -54,7 +88,8 @@ const TitleInput = styled.input`
   font-size: 1.1em;
 `;
 
-export default connect(
-  null,
-  { addNewIssue }
-)(NewIssueView);
+const mapStateToProps = (state: State) => ({
+  currentUser: state.currentUser
+});
+
+export default connect(mapStateToProps)(NewIssueView);

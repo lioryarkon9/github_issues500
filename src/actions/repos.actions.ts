@@ -19,6 +19,6 @@ export const fetchRepos = (): ApiAction<any> => ({
       window.alert('something went wrong! try again');
     },
     onSuccess: (data: any) => setRepos(data),
-    baseUrl: 'https://api/github.com'
+    baseUrl: 'https://api.github.com'
   }
 });

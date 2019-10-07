@@ -1,26 +1,17 @@
 import React, { useEffect } from 'react';
 import { State } from 'types/redux.types';
-import { fetchRepos, setRepos } from 'actions/repos.actions';
+import { fetchRepos } from 'actions/repos.actions';
 import { connect } from 'react-redux';
 import { values } from 'lodash/fp';
 import styled from '@emotion/styled';
 import RouteWrapper from 'components/RouteWrapper';
 import { Link, Redirect } from 'react-router-dom';
 
-const ReposView = ({ currentUser, repos, setRepos }: any) => {
+const ReposView = ({ currentUser, repos, fetchRepos: fetchUserRepos }: any) => {
   const reposList = values(repos);
 
   useEffect(() => {
-    //fetchRepos();
-    fetch(`https://api.github.com/user/repos`, {
-      headers: {
-        Authorization: `token ${window.sessionStorage.getItem('_token')}`
-      }
-    }).then(httpResponse => {
-      httpResponse.json().then(jsonResponse => {
-        setRepos(jsonResponse);
-      });
-    });
+    fetchUserRepos();
   }, []);
 
   if (!currentUser) {
@@ -80,7 +71,6 @@ const mapStateToProps = (state: State) => ({
 export default connect(
   mapStateToProps,
   {
-    fetchRepos,
-    setRepos
+    fetchRepos
   }
 )(ReposView);
