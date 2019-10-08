@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { values } from 'lodash/fp';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
+import WithAuth from 'components/WithAuth';
 
 const ReposView = ({ repos, fetchRepos: fetchUserRepos }: any) => {
   const reposList = values(repos);
@@ -62,9 +63,11 @@ const mapStateToProps = (state: State) => ({
   repos: state.repos
 });
 
-export default connect(
+const connectedReposView = connect(
   mapStateToProps,
   {
     fetchRepos
   }
 )(ReposView);
+
+export default connectedReposView;

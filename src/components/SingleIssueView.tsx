@@ -23,8 +23,9 @@ const SingleIssueView = ({ router, issues }: any) => {
           {currentIssue.state}
         </StateMockButton>
         <IssueInfo>
-          guest opened this issue {moment(currentIssue.created_at).fromNow()}{' '}
-          &#183; {currentIssue.comments}
+          {currentIssue.user.login} opened this issue{' '}
+          {moment(currentIssue.created_at).fromNow()} &#183;{' '}
+          {currentIssue.comments}
         </IssueInfo>
       </MiddleContainer>
       <IssueBody>{currentIssue.body}</IssueBody>
