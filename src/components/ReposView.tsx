@@ -4,26 +4,21 @@ import { fetchRepos } from 'actions/repos.actions';
 import { connect } from 'react-redux';
 import { values } from 'lodash/fp';
 import styled from '@emotion/styled';
-import RouteWrapper from 'components/RouteWrapper';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const ReposView = ({ currentUser, repos, fetchRepos: fetchUserRepos }: any) => {
+const ReposView = ({ repos, fetchRepos: fetchUserRepos }: any) => {
   const reposList = values(repos);
 
   useEffect(() => {
     fetchUserRepos();
   }, []);
 
-  if (!currentUser) {
-    return <Redirect to="/login" />;
-  }
-
   if (!reposList.length) {
     return <h2>No repos yet</h2>;
   }
 
   return (
-    <RouteWrapper>
+    <>
       <ReposGrid>
         {reposList.map(repo => (
           <Link
@@ -36,7 +31,7 @@ const ReposView = ({ currentUser, repos, fetchRepos: fetchUserRepos }: any) => {
           </Link>
         ))}
       </ReposGrid>
-    </RouteWrapper>
+    </>
   );
 };
 

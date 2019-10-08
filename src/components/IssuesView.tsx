@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
-import RouteWrapper from 'components/RouteWrapper';
 import ItemsContainer from 'components/ItemsContainer';
 import { fetchIssuesByOwnerAndRepo } from 'actions/issues.actions';
 import NewIssueButton from 'components/NewIssueButton';
@@ -29,12 +28,8 @@ const IssuesView = ({
     fetchIssues({ user: userName, repo: repoName });
   }, []);
 
-  if (!currentUser) {
-    return <Redirect to="/login" />;
-  }
-
   return (
-    <RouteWrapper>
+    <>
       <FlexBetween>
         <Flex>
           <div>todo: filter</div>
@@ -62,7 +57,7 @@ const IssuesView = ({
             ))
           : 'No issues yet'}
       </ItemsContainer>
-    </RouteWrapper>
+    </>
   );
 };
 

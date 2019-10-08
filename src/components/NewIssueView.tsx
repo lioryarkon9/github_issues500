@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
-import RouteWrapper from 'components/RouteWrapper';
 import ItemsContainer from 'components/ItemsContainer';
 import CreateButton from 'components/CreateButton';
 import { State } from 'types/redux.types';
@@ -14,7 +13,7 @@ const NewIssueView = ({ router, currentUser, addNewIssue }: any) => {
   const [issueBody, setIssueBody] = useState('');
 
   return (
-    <RouteWrapper>
+    <>
       <FormItemContainer>
         <TitleSpan>Create New Issue</TitleSpan>
       </FormItemContainer>
@@ -43,7 +42,7 @@ const NewIssueView = ({ router, currentUser, addNewIssue }: any) => {
           </CreateButton>
         </FormItemContainer>
       </ItemsContainer>
-    </RouteWrapper>
+    </>
   );
 };
 

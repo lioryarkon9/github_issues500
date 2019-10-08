@@ -1,20 +1,14 @@
 import React from 'react';
-import RouteWrapper from 'components/RouteWrapper';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Redirect } from 'react-router';
 
 const SingleIssueView = ({ router, issues }: any) => {
   const singleIssueId = parseInt(router.match.params.id);
   const currentIssue = issues[singleIssueId];
 
-  if (!currentIssue) {
-    return <Redirect to="/login" />;
-  }
-
   return (
-    <RouteWrapper>
+    <>
       <TopContainer>
         <TitleAndNumberContainer>
           <div>
@@ -34,7 +28,7 @@ const SingleIssueView = ({ router, issues }: any) => {
         </IssueInfo>
       </MiddleContainer>
       <IssueBody>{currentIssue.body}</IssueBody>
-    </RouteWrapper>
+    </>
   );
 };
 

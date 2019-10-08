@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-export default (props: any) => (
+export default ({ children }: any) => (
   <Wrapper>
-    <BodyContainer>{props.children}</BodyContainer>
+    <BodyContainer>{children}</BodyContainer>
   </Wrapper>
 );
 

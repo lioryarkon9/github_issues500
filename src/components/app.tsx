@@ -1,13 +1,17 @@
 import * as React from 'react';
 import { ThemeProvider } from 'emotion-theming';
-import { Router } from 'react-router-dom';
-import { Route } from 'react-router';
+import {
+  Redirect,
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
-import history from 'utils/history.utils';
 // TODO: remove if no need for Lazy load routes:
 import lazyLoad from 'utils/lazy-load.utils';
 import store from 'store';
 import theme from 'constants/themes.constants';
+import RouteWrapper from 'components/RouteWrapper';
 import NewIssueView from 'components/NewIssueView';
 import SingleIssueView from 'components/SingleIssueView';
 import LoginView from 'components/LoginView';
@@ -19,26 +23,34 @@ class App extends React.Component<{}> {
     return (
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <Router history={history}>
-            <Route path="/login:code?" component={LoginView} />
-            <Route path="/repos" component={ReposView} />
-            <Route
-              path="/issues/:repo_name"
-              component={(router: any) => <IssuesView router={router} />}
-            />
-            <Route
-              path={'/single_issue/:id'}
-              component={(router: any) => <SingleIssueView router={router} />}
-            />
-            <Route
-              path="/new_issue/:repo_name"
-              component={(router: any) => <NewIssueView router={router} />}
-            />
-            <Route
-              path="/lazy"
-              component={lazyLoad(() => import('sample/lazy'))}
-            />
-          </Router>
+          <RouteWrapper>
+            <Router>
+              <Switch>
+                <Route path="/login:code?" component={LoginView} />
+                <Route path="/repos" component={ReposView} />
+                <Route
+                  path="/issues/:repo_name"
+                  component={(router: any) => <IssuesView router={router} />}
+                />
+                <Route
+                  path={'/single_issue/:id'}
+                  component={(router: any) => (
+                    <SingleIssueView router={router} />
+                  )}
+                />
+                <Route
+                  path="/new_issue/:repo_name"
+                  component={(router: any) => <NewIssueView router={router} />}
+                />
+                <Route
+                  path="/lazy"
+                  component={lazyLoad(() => import('sample/lazy'))}
+                />
+                <Redirect from="/" to="/login" />
+                <Route path="*" component={() => <h2>404: NOT FOUND</h2>} />
+              </Switch>
+            </Router>
+          </RouteWrapper>
         </ThemeProvider>
       </Provider>
     );
