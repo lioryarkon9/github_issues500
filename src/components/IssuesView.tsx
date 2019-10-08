@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import ItemsContainer from 'components/ItemsContainer';
@@ -16,12 +16,16 @@ const IssuesView = ({
 }: any) => {
   const repoName = router.match.params['repo_name'];
   const userName = currentUser ? currentUser.login : '';
-  const issuesList = values(issues).sort((a, b) => {
-    const numberA = a.number;
-    const numberB = b.number;
+  const issuesList = useMemo(
+    () =>
+      values(issues).sort((a, b) => {
+        const numberA = a.number;
+        const numberB = b.number;
 
-    return numberB - numberA;
-  });
+        return numberB - numberA;
+      }),
+    [issues]
+  );
 
   useEffect(() => {
     fetchIssues({ user: userName, repo: repoName });
