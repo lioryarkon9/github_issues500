@@ -59,7 +59,6 @@ const ReposGrid = styled.div`
 `;
 
 const mapStateToProps = (state: State) => ({
-  currentUser: state.currentUser,
   repos: state.repos
 });
 

@@ -7,7 +7,6 @@ import NewIssueButton from 'components/NewIssueButton';
 import { State } from 'types/redux.types';
 import { values } from 'lodash/fp';
 import IssueItem from 'components/IssueItem';
-import { Redirect } from 'react-router';
 
 const IssuesView = ({
   fetchIssuesByOwnerAndRepo: fetchIssues,
