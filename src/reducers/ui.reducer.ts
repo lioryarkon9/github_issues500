@@ -1,5 +1,9 @@
 import { handleActions } from 'redux-actions';
-import { ON_CHANGE_FILTER_ISSUES_INPUT } from 'constants/actionNames.constants';
+import {
+  ON_CHANGE_FILTER_ISSUES_INPUT,
+  TOGGLE_LOADER_STATUS
+} from 'constants/actionNames.constants';
+import { action } from '@storybook/addon-actions';
 
 export type Ui = {
   isDisplayLoader: boolean;
@@ -19,6 +23,12 @@ const uiReducer = handleActions<Ui>(
       return {
         ...state,
         filterInputValue: value
+      };
+    },
+    [TOGGLE_LOADER_STATUS]: state => {
+      return {
+        ...state,
+        isDisplayLoader: !state.isDisplayLoader
       };
     }
   },

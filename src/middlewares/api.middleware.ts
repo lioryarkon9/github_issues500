@@ -8,6 +8,7 @@ import { BaseAction } from 'types/base-redux.types';
 import { State } from 'types/redux.types';
 import { BASE_URL } from 'constants/config';
 import * as logger from 'utils/logger';
+import { toggleLoaderStatus } from 'actions/ui.actions';
 
 export function dispatchActions(
   dispatch: Dispatch<BaseAction>,
@@ -28,6 +29,8 @@ export function apiMiddleware({ dispatch }: Store<State>) {
     if (!get('meta.api', action)) {
       return next(action);
     }
+
+    dispatch(toggleLoaderStatus());
 
     const { payload } = action;
     const {
@@ -62,6 +65,8 @@ export function apiMiddleware({ dispatch }: Store<State>) {
       if (onSuccess) {
         dispatchActions(dispatch, onSuccess, response.body || response.text);
       }
+
+      dispatch(toggleLoaderStatus());
 
       dispatch(endNetwork(networkLabel));
     } catch (error) {

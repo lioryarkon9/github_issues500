@@ -2,12 +2,16 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { State } from 'types/redux.types';
 import { connect } from 'react-redux';
+import Loader from 'components/Loder/Loader';
 
-const RouteWrapper = ({ children, currentUser }: any) => (
+const RouteWrapper = ({ children, currentUser, isDisplayLoader }: any) => (
   <Wrapper>
+    {isDisplayLoader ? <Loader /> : null}
+
     <Greeting>
       {currentUser ? `Logged-in as ${currentUser.login}` : 'Log in to start'}
     </Greeting>
+
     <BodyContainer>{children}</BodyContainer>
   </Wrapper>
 );
@@ -32,7 +36,8 @@ const BodyContainer = styled.div`
 `;
 
 const mapStateToProps = (state: State) => ({
-  currentUser: state.currentUser
+  currentUser: state.currentUser,
+  isDisplayLoader: state.ui.isDisplayLoader
 });
 
 export default connect(mapStateToProps)(RouteWrapper);

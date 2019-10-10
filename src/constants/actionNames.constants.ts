@@ -9,8 +9,8 @@ export const SET_REPOS = 'SET_REPOS';
 export const FETCH_REPOS = 'FETCH_REPOS';
 
 // ---- ui ----
-export const SET_CURRENT_ISSUE_ID = 'SET_CURRENT_ISSUE_ID';
 export const ON_CHANGE_FILTER_ISSUES_INPUT = 'ON_CHANGE_FILTER_ISSUES_INPUT';
+export const TOGGLE_LOADER_STATUS = 'TOGGLE_LOADER_STATUS';
 
 // ---- current user ----
 export const FETCH_TOKEN = 'FETCH_TOKEN';
