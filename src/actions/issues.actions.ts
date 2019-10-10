@@ -36,7 +36,8 @@ export const addNewIssue = ({
   issueTitle: title,
   issueBody: body,
   userName,
-  repoName
+  repoName,
+  router
 }: any): ApiAction<any> => ({
   type: actionNames.ADD_NEW_ISSUE,
   meta: { api: true },
@@ -50,13 +51,12 @@ export const addNewIssue = ({
       console.error('ERROR ADDING ISSUE', error);
       window.alert('something was wrong. try again');
     },
-    onSuccess: (data: any) => onSuccessAddNewIssue(data)
+    onSuccess: (data: any) => onSuccessAddNewIssue({ router })
   }
 });
 
-const onSuccessAddNewIssue = ({ title }: any) => {
-  window.alert(`issue ${title} added successfully`);
-
+const onSuccessAddNewIssue = ({ router }: any) => {
+  router.history.goBack();
   return {
     type: 'ON_SUCCESS_ADD_NEW_ISSUE'
   };

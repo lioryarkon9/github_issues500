@@ -6,6 +6,7 @@ import { values } from 'lodash/fp';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import WithAuth from 'components/WithAuth';
+import ViewTitle from 'components/ViewTitle';
 
 const ReposView = ({ repos, fetchRepos: fetchUserRepos }: any) => {
   const reposList = values(repos);
@@ -20,6 +21,7 @@ const ReposView = ({ repos, fetchRepos: fetchUserRepos }: any) => {
 
   return (
     <>
+      <ViewTitle>Choose a Repo</ViewTitle>
       <ReposGrid>
         {reposList.map(repo => (
           <Link
@@ -45,13 +47,21 @@ const RepoName = styled.div`
 const Repo = styled.div`
   height: 150px;
   width: 150px;
-  border: 1px solid;
+  border: 1px #3c4146;
+  box-shadow: 0 0 2px 2px;
   border-radius: 5px;
-  box-shadow: 0 0 2px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 10px;
+  color: #3c4146;
+  font-weight: bold;
+  padding: 5px;
+  :hover {
+    background-color: #3c4146;
+    color: #a6afb9;
+    box-shadow: 0 0 2px 2px #a6afb9;
+  }
 `;
 
 const ReposGrid = styled.div`

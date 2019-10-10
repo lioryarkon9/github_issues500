@@ -6,6 +6,7 @@ import CreateButton from 'components/CreateButton';
 import { State } from 'types/redux.types';
 import { addNewIssue } from 'actions/issues.actions';
 import WithAuth from 'components/WithAuth';
+import ViewTitle from 'components/ViewTitle';
 
 const NewIssueView = ({ router, currentUser, addNewIssue }: any) => {
   const { login: userName } = currentUser;
@@ -16,7 +17,7 @@ const NewIssueView = ({ router, currentUser, addNewIssue }: any) => {
   return (
     <>
       <FormItemContainer>
-        <TitleSpan>Create New Issue</TitleSpan>
+        <ViewTitle>Create New Issue</ViewTitle>
       </FormItemContainer>
       <ItemsContainer>
         <FormItemContainer>
@@ -37,7 +38,7 @@ const NewIssueView = ({ router, currentUser, addNewIssue }: any) => {
         <FormItemContainer>
           <CreateButton
             onClick={() =>
-              addNewIssue({ issueTitle, issueBody, userName, repoName })
+              addNewIssue({ issueTitle, issueBody, userName, repoName, router })
             }>
             SAVE
           </CreateButton>
@@ -55,10 +56,6 @@ const TextArea = styled.textarea`
   padding: 0 5px 0 5px;
   font-size: 1.1em;
   resize: none;
-`;
-
-const TitleSpan = styled.span`
-  font-size: 1.2em;
 `;
 
 const FormItemContainer = styled.div`

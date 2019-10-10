@@ -4,6 +4,7 @@ import { fetchToken } from 'actions/currentUser.actions';
 import { connect } from 'react-redux';
 import { State } from 'types/redux.types';
 import { Redirect } from 'react-router';
+import ViewTitle from 'components/ViewTitle';
 
 const LoginView = ({
   location,
@@ -26,7 +27,7 @@ const LoginView = ({
 
   return (
     <>
-      <LoginTitle>Login</LoginTitle>
+      <ViewTitle>Login</ViewTitle>
       <FormInputsContainer>
         <a href={gitHubUrl}>Initialize Github</a>
       </FormInputsContainer>
@@ -38,10 +39,6 @@ const FormInputsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const LoginTitle = styled.h1`
-  text-align: center;
 `;
 
 const mapStateToProps = (state: State) => ({
