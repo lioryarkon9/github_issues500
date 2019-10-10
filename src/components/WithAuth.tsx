@@ -8,19 +8,20 @@ type AuthProps = {
   rest?: any;
 };
 
-const WithAuth = (Component: React.FunctionComponent<any>) => ({
-  currentUser,
-  ...rest
-}: AuthProps) => {
-  if (!currentUser) {
-    return <Redirect to="/login" />;
-  }
+const WithAuth = (Component: React.FunctionComponent<any>) => {
+  const RenderAuthorized = ({ currentUser, ...rest }: AuthProps) => {
+    if (!currentUser) {
+      return <Redirect to="/login" />;
+    }
 
-  return <Component {...rest} />;
+    return <Component {...rest} />;
+  };
+
+  const mapStateToProps = (state: State) => ({
+    currentUser: state.currentUser
+  });
+
+  return connect(mapStateToProps)(RenderAuthorized);
 };
 
-const mapStateToProps = (state: State) => ({
-  currentUser: state.currentUser
-});
-
-export default connect(mapStateToProps)(WithAuth);
+export default WithAuth;

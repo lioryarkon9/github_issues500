@@ -70,4 +70,4 @@ const connectedReposView = connect(
   }
 )(ReposView);
 
-export default connectedReposView;
+export default WithAuth(connectedReposView);

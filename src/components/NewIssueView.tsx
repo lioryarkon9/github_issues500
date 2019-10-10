@@ -5,6 +5,7 @@ import ItemsContainer from 'components/ItemsContainer';
 import CreateButton from 'components/CreateButton';
 import { State } from 'types/redux.types';
 import { addNewIssue } from 'actions/issues.actions';
+import WithAuth from 'components/WithAuth';
 
 const NewIssueView = ({ router, currentUser, addNewIssue }: any) => {
   const { login: userName } = currentUser;
@@ -79,7 +80,9 @@ const mapStateToProps = (state: State) => ({
   currentUser: state.currentUser
 });
 
-export default connect(
+const connectedNewIssueView = connect(
   mapStateToProps,
   { addNewIssue }
 )(NewIssueView);
+
+export default WithAuth(connectedNewIssueView);

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import WithAuth from 'components/WithAuth';
 
 const SingleIssueView = ({ router, issues }: any) => {
   const singleIssueId = parseInt(router.match.params.id);
@@ -82,4 +83,6 @@ const mapStateToProps = (state: any) => ({
   issues: state.issues
 });
 
-export default connect(mapStateToProps)(SingleIssueView);
+const connectedSingleIssueView = connect(mapStateToProps)(SingleIssueView);
+
+export default WithAuth(connectedSingleIssueView);

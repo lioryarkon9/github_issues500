@@ -7,6 +7,7 @@ import NewIssueButton from 'components/NewIssueButton';
 import { State } from 'types/redux.types';
 import { values } from 'lodash/fp';
 import IssueItem from 'components/IssueItem';
+import WithAuth from 'components/WithAuth';
 
 const IssuesView = ({
   fetchIssuesByOwnerAndRepo: fetchIssues,
@@ -121,9 +122,11 @@ const mapStateToProps = (state: State) => ({
   issues: state.issues
 });
 
-export default connect(
+const connectedIssuesView = connect(
   mapStateToProps,
   {
     fetchIssuesByOwnerAndRepo
   }
 )(IssuesView);
+
+export default WithAuth(connectedIssuesView);
