@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import { State } from 'types/redux.types';
 import { Redirect } from 'react-router';
 import ViewTitle from 'components/ViewTitle';
+import { GITHUB_CLIENT_ID } from 'constants/custom.constants';
 
 const LoginView = ({
   location,
   currentUser,
   fetchToken: fetchTokenByCodeAndGetUserDetails
 }: any) => {
-  const gitHubUrl =
-    'https://github.com/login/oauth/authorize?client_id=3f7df47dee6d4bfe0466&scope=repo';
+  const gitHubUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=repo`;
   const code = location.search.split('=')[1];
 
   useEffect(() => {

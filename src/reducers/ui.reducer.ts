@@ -3,19 +3,18 @@ import {
   ON_CHANGE_FILTER_ISSUES_INPUT,
   TOGGLE_LOADER_STATUS
 } from 'constants/actionNames.constants';
-import { action } from '@storybook/addon-actions';
 
-export type Ui = {
+export type UiState = {
   isDisplayLoader: boolean;
   filterInputValue: string;
 };
 
-const initialState: Ui = {
+const initialState: UiState = {
   isDisplayLoader: false,
   filterInputValue: ''
 };
 
-const uiReducer = handleActions<Ui>(
+const uiReducer = handleActions<UiState>(
   {
     [ON_CHANGE_FILTER_ISSUES_INPUT]: (state, action) => {
       const { value } = action.payload;

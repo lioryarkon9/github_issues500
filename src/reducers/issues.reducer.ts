@@ -2,13 +2,13 @@ import { handleActions } from 'redux-actions';
 import * as actionNames from 'constants/actionNames.constants';
 import { keyBy } from 'lodash/fp';
 
-export type Issues = {
+export type IssuesState = {
   [id: number]: any;
 };
 
 const initialState = {};
 
-const issuesReducer = handleActions<Issues>(
+const issuesReducer = handleActions<IssuesState>(
   {
     [actionNames.SET_ISSUES]: (state, action) => {
       const issuesList = action.payload;

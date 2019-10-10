@@ -17,7 +17,7 @@ const SingleIssueView = ({ router, issues }: any) => {
             <NumberSpan> #{currentIssue.number}</NumberSpan>
           </div>
         </TitleAndNumberContainer>
-        <div>Todo:Buttons</div>
+        <div />
       </TopContainer>
       <MiddleContainer>
         <StateMockButton issueState={currentIssue.state}>

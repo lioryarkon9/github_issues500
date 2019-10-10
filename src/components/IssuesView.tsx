@@ -36,12 +36,7 @@ const IssuesView = ({
   return (
     <>
       <FlexBetween>
-        <Flex>
-          <div>todo: filter</div>
-          <SearchInput />
-          <ActionButtonPrimary>Labels</ActionButtonPrimary>
-          <ActionButtonPrimary>Milestones</ActionButtonPrimary>
-        </Flex>
+        <Flex />
         <NewIssueButton repoName={repoName} />
       </FlexBetween>
       <ItemsContainer>

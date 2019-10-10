@@ -1,13 +1,13 @@
 import { NetworkState } from 'reducers/network.reducer';
-import { Ui } from 'reducers/ui.reducer';
-import { Issues } from 'reducers/issues.reducer';
-import { CurrentUser } from 'reducers/currentUser.reducer';
-import { Repos } from 'reducers/repos.reducer';
+import { UiState } from 'reducers/ui.reducer';
+import { IssuesState } from 'reducers/issues.reducer';
+import { CurrentUserState } from 'reducers/currentUser.reducer';
+import { ReposState } from 'reducers/repos.reducer';
 
 export type State = {
   network: NetworkState;
-  issues: Issues;
-  ui: Ui;
-  currentUser: CurrentUser;
-  repos: Repos;
+  issues: IssuesState;
+  ui: UiState;
+  currentUser: CurrentUserState;
+  repos: ReposState;
 };
