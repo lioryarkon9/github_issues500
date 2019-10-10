@@ -2,19 +2,22 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { getPrettyOpenedOn } from 'utils/prettify';
 import { Link } from 'react-router-dom';
+import { Icon } from 'antd';
 
 const IssueItem = ({ id, title, number, created_at, comments }: any) => (
   <StyledIssue>
     <LeftContainer>
-      <SubLeftContainer1>
-        <IssueStateIcon />
+      <Flex>
+        <IssueStateIcon>
+          <Icon type="solution" />
+        </IssueStateIcon>
         <Link to={`/single_issue/${id}`}>
           <IssueLinkSpan>{title}</IssueLinkSpan>
         </Link>
-      </SubLeftContainer1>
-      <SubLeftContainer2>
+      </Flex>
+      <SmallText>
         {number} {getPrettyOpenedOn(created_at)}
-      </SubLeftContainer2>
+      </SmallText>
     </LeftContainer>
     <RightContainer>{comments}</RightContainer>
   </StyledIssue>
@@ -42,15 +45,11 @@ const RightContainer = styled.div`
   }
 `;
 
-const SubLeftContainer1 = styled.div`
+const Flex = styled.div`
   display: flex;
 `;
 
-//todo: replace with img tag and set src
 const IssueStateIcon = styled.div`
-  height: 1em;
-  width: 1em;
-  background-color: purple;
   margin-right: 5px;
 `;
 
@@ -61,7 +60,7 @@ const IssueLinkSpan = styled.span`
   }
 `;
 
-const SubLeftContainer2 = styled.div`
+const SmallText = styled.div`
   color: #586069;
   font-size: small;
   ::before {

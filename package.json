@@ -31,6 +31,7 @@
     "@types/storybook__react": "4.0.2",
     "@types/superagent": "4.1.1",
     "@types/url-join": "4.0.0",
+    "antd": "3.23.6",
     "emotion-theming": "10.0.10",
     "history": "4.9.0",
     "http-server": "0.11.1",

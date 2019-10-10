@@ -8,6 +8,7 @@ import { State } from 'types/redux.types';
 import { values } from 'lodash/fp';
 import IssueItem from 'components/IssueItem';
 import WithAuth from 'components/WithAuth';
+import { List } from 'antd';
 
 const IssuesView = ({
   fetchIssuesByOwnerAndRepo: fetchIssues,
@@ -48,18 +49,20 @@ const IssuesView = ({
           <div>containerA</div>
           <div>ContainerB</div>
         </ItemsHeaderContainer>
-        {issuesList.length
-          ? issuesList.map((issue: any) => (
-              <IssueItem
-                key={issue.id.toString()}
-                id={issue.id}
-                title={issue.title}
-                number={issue.number}
-                created_at={issue.created_at}
-                comments={issue.comments}
-              />
-            ))
-          : 'No issues yet'}
+        <List
+          locale={{ emptyText: 'No issues yet' }}
+          dataSource={issuesList}
+          renderItem={issue => (
+            <IssueItem
+              key={issue.id.toString()}
+              id={issue.id}
+              title={issue.title}
+              number={issue.number}
+              created_at={issue.created_at}
+              comments={issue.comments}
+            />
+          )}
+        />
       </ItemsContainer>
     </>
   );

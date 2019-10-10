@@ -25,12 +25,10 @@ const uiReducer = handleActions<Ui>(
         filterInputValue: value
       };
     },
-    [TOGGLE_LOADER_STATUS]: state => {
-      return {
-        ...state,
-        isDisplayLoader: !state.isDisplayLoader
-      };
-    }
+    [TOGGLE_LOADER_STATUS]: state => ({
+      ...state,
+      isDisplayLoader: !state.isDisplayLoader
+    })
   },
   initialState
 );

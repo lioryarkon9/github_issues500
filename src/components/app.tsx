@@ -18,6 +18,8 @@ import LoginView from 'components/LoginView';
 import ReposView from 'components/ReposView';
 import IssuesView from 'components/IssuesView';
 
+import 'antd/dist/antd.css';
+
 class App extends React.Component<{}> {
   render() {
     return (
