@@ -1,33 +1,38 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import ItemsContainer from 'components/ItemsContainer';
 import { fetchIssuesByOwnerAndRepo } from 'actions/issues.actions';
+import { onChangeFilterInput } from 'actions/ui.actions';
 import NewIssueButton from 'components/NewIssueButton';
 import { State } from 'types/redux.types';
 import { values } from 'lodash/fp';
 import IssueItem from 'components/IssueItem';
 import WithAuth from 'components/WithAuth';
 import { List } from 'antd';
+import {
+  filterInputSelector,
+  issuesFilteredByInputChangeSelector
+} from 'selectors/issues.selectors';
 
 const IssuesView = ({
+  onChangeFilterInput,
   fetchIssuesByOwnerAndRepo: fetchIssues,
   router,
   currentUser,
-  issues
+  issues,
+  issuesListByOnChange,
+  filterInputValue
 }: any) => {
   const repoName = router.match.params['repo_name'];
   const userName = currentUser ? currentUser.login : '';
-  const issuesList = useMemo(
-    () =>
-      values(issues).sort((a, b) => {
-        const numberA = a.number;
-        const numberB = b.number;
-
-        return numberB - numberA;
-      }),
-    [issues]
-  );
+  const [emptyMessage, setEmptyMessage] = useState('No issues yet');
+  const issuesList = useMemo(() => values(issues).sort(sortIssuesAscending), [
+    issues
+  ]);
+  const issuesToRender = filterInputValue
+    ? issuesListByOnChange.sort(sortIssuesAscending)
+    : issuesList;
 
   useEffect(() => {
     fetchIssues({ user: userName, repo: repoName });
@@ -36,18 +41,32 @@ const IssuesView = ({
   return (
     <>
       <FlexBetween>
-        <Flex />
+        <Flex>
+          <SearchInput
+            value={filterInputValue}
+            placeholder="Search issue..."
+            onChange={e => {
+              onChangeFilterInput(e.currentTarget.value);
+
+              if (issuesListByOnChange.length) {
+                setEmptyMessage('No matching results');
+              } else {
+                setEmptyMessage('No issues yet');
+              }
+            }}
+          />
+        </Flex>
         <NewIssueButton repoName={repoName} />
       </FlexBetween>
       <ItemsContainer>
         <ItemsHeaderContainer>
-          <div>containerA</div>
-          <div>ContainerB</div>
+          <div>{issuesToRender.length} issues</div>
+          <div />
         </ItemsHeaderContainer>
         <List
-          locale={{ emptyText: 'No issues yet' }}
-          dataSource={issuesList}
-          renderItem={issue => (
+          locale={{ emptyText: emptyMessage }}
+          dataSource={issuesToRender}
+          renderItem={(issue: any) => (
             <IssueItem
               key={issue.id.toString()}
               id={issue.id}
@@ -115,15 +134,25 @@ const ItemsHeaderContainer = styled.div`
   border-bottom: 1px solid #d1d5da;
 `;
 
+const sortIssuesAscending = (a: any, b: any) => {
+  const numberA = a.number;
+  const numberB = b.number;
+
+  return numberB - numberA;
+};
+
 const mapStateToProps = (state: State) => ({
   currentUser: state.currentUser,
-  issues: state.issues
+  issues: state.issues,
+  issuesListByOnChange: issuesFilteredByInputChangeSelector(state),
+  filterInputValue: filterInputSelector(state)
 });
 
 const connectedIssuesView = connect(
   mapStateToProps,
   {
-    fetchIssuesByOwnerAndRepo
+    fetchIssuesByOwnerAndRepo,
+    onChangeFilterInput
   }
 )(IssuesView);
 
