@@ -34,7 +34,7 @@ const Greeting = styled.div`
 const Wrapper = styled.div`
   min-height: 100vh;
   box-sizing: border-box;
-  padding: 3% 1% 1% 1%;
+  padding: 0% 1% 1% 1%;
 `;
 
 const Body = styled.div`
