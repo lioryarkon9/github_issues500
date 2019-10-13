@@ -106,6 +106,9 @@ const SearchInput = styled.input`
   border-radius: 3px;
   box-sizing: border-box;
   font-size: 1.1em;
+  @media only screen and (max-width: 600px) {
+    width: 180px;
+  }
 `;
 
 const ActionButtonPrimary = styled.div`

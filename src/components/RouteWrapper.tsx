@@ -39,7 +39,7 @@ const Wrapper = styled.div`
 
 const Body = styled.div`
   max-width: 1800px;
-  min-width: 1100px;
+  min-width: 100vw;
 `;
 
 const mapStateToProps = (state: State) => ({
