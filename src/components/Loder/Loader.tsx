@@ -24,6 +24,7 @@ const Wrapper = styled.div`
   align-items: center;
   z-index: 2;
   position: fixed;
+  left: 0;
 `;
 
 export default Loader;
