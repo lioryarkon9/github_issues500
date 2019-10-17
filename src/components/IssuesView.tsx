@@ -35,10 +35,8 @@ const IssuesView = ({
     : issuesList;
 
   useEffect(() => {
-    setTimeout(() => fetchIssues({ user: userName, repo: repoName }), 700);
+    fetchIssues({ user: userName, repo: repoName });
   }, []);
-
-  debugger;
 
   return (
     <>
