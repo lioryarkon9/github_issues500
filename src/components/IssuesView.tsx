@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import ItemsContainer from 'components/ItemsContainer';
@@ -27,9 +27,7 @@ const IssuesView = ({
   const repoName = router.match.params['repo_name'];
   const userName = currentUser ? currentUser.login : '';
   const [emptyMessage, setEmptyMessage] = useState('No issues yet');
-  const issuesList = useMemo(() => values(issues).sort(sortIssuesAscending), [
-    issues
-  ]);
+  const issuesList = values(issues).sort(sortIssuesAscending);
   const issuesToRender = filterInputValue
     ? issuesListByOnChange.sort(sortIssuesAscending)
     : issuesList;
