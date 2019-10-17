@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { fetchToken } from 'actions/currentUser.actions';
 import { connect } from 'react-redux';

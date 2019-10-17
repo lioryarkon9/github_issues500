@@ -9,10 +9,14 @@ import WithAuth from 'components/WithAuth';
 import ViewTitle from 'components/ViewTitle';
 
 const NewIssueView = ({ router, currentUser, addNewIssue }: any) => {
-  const { login: userName } = currentUser;
+  const userName = currentUser ? currentUser.login : '';
   const repoName = router.match.params['repo_name'];
   const [issueTitle, setIssueTitle] = useState('');
   const [issueBody, setIssueBody] = useState('');
+
+  if (!userName) {
+    return <h2>Please wait...</h2>;
+  }
 
   return (
     <>

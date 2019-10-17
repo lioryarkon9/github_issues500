@@ -35,8 +35,10 @@ const IssuesView = ({
     : issuesList;
 
   useEffect(() => {
-    fetchIssues({ user: userName, repo: repoName });
-  }, []);
+    if (userName) {
+      fetchIssues({ user: userName, repo: repoName });
+    }
+  }, [userName]);
 
   return (
     <>

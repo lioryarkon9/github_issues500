@@ -4,15 +4,28 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import WithAuth from 'components/WithAuth';
 import CreateButton from 'components/CreateButton';
-import { updateIssue } from 'actions/issues.actions';
+import { fetchIssuesByOwnerAndRepo, updateIssue } from 'actions/issues.actions';
+import { Redirect } from 'react-router';
 
-const SingleIssueView = ({ router, issues, updateIssue, currentUser }: any) => {
+const SingleIssueView = ({
+  router,
+  issues,
+  updateIssue,
+  currentUser,
+  fetchIssuesByOwnerAndRepo
+}: any) => {
   const singleIssueId = parseInt(router.match.params.id);
   const repoName = router.match.params.repoName;
   const currentIssue = issues[singleIssueId];
+  const title = currentIssue ? currentIssue.title : '';
+  const body = currentIssue ? currentIssue.body : '';
   const [isEditable, setIsEditable] = useState(false);
-  const [titleValue, setTitleValue] = useState(currentIssue.title);
-  const [bodyValue, setBodyValue] = useState(currentIssue.body);
+  const [titleValue, setTitleValue] = useState(title);
+  const [bodyValue, setBodyValue] = useState(body);
+
+  if (!currentIssue) {
+    return <Redirect to="/issues" />;
+  }
 
   return (
     <>
@@ -185,7 +198,10 @@ const mapStateToProps = (state: any) => ({
 
 const connectedSingleIssueView = connect(
   mapStateToProps,
-  { updateIssue }
+  {
+    updateIssue,
+    fetchIssuesByOwnerAndRepo
+  }
 )(SingleIssueView);
 
 export default WithAuth(connectedSingleIssueView);
