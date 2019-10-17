@@ -1,23 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import WithAuth from 'components/WithAuth';
+import CreateButton from 'components/CreateButton';
+import { updateIssue } from 'actions/issues.actions';
 
-const SingleIssueView = ({ router, issues }: any) => {
+const SingleIssueView = ({ router, issues, updateIssue, currentUser }: any) => {
   const singleIssueId = parseInt(router.match.params.id);
+  const repoName = router.match.params.repoName;
   const currentIssue = issues[singleIssueId];
+  const [isEditable, setIsEditable] = useState(false);
+  const [titleValue, setTitleValue] = useState(currentIssue.title);
+  const [bodyValue, setBodyValue] = useState(currentIssue.body);
 
   return (
     <>
       <TopContainer>
         <TitleAndNumberContainer>
           <div>
-            {currentIssue.title}
+            {!isEditable ? (
+              currentIssue.title
+            ) : (
+              <TitleInput
+                value={titleValue}
+                onChange={e => setTitleValue(e.currentTarget.value)}
+              />
+            )}
             <NumberSpan> #{currentIssue.number}</NumberSpan>
           </div>
         </TitleAndNumberContainer>
-        <div />
+
+        <EditButton
+          onClick={() => {
+            setIsEditable(!isEditable);
+            setTitleValue(currentIssue.title);
+            setBodyValue(currentIssue.body);
+          }}>
+          {isEditable ? 'Cancel' : 'Edit'}
+        </EditButton>
       </TopContainer>
       <MiddleContainer>
         <StateMockButton issueState={currentIssue.state}>
@@ -29,20 +50,98 @@ const SingleIssueView = ({ router, issues }: any) => {
           {currentIssue.comments}
         </IssueInfo>
       </MiddleContainer>
-      <IssueBody>{currentIssue.body}</IssueBody>
+
+      <IssueBody>
+        {isEditable ? (
+          <TextArea
+            value={bodyValue}
+            onChange={e => setBodyValue(e.currentTarget.value)}
+          />
+        ) : (
+          currentIssue.body
+        )}
+      </IssueBody>
+
+      {isEditable ? (
+        <FlexJustifiedCenter>
+          <CreateButton
+            onClick={() =>
+              updateIssue({
+                issueTitle: titleValue,
+                issueBody: bodyValue,
+                userName: currentUser.login,
+                repoName,
+                issueNumber: currentIssue.number,
+                router
+              })
+            }>
+            SAVE
+          </CreateButton>
+        </FlexJustifiedCenter>
+      ) : null}
     </>
   );
 };
 
+const EditButton = styled.div`
+  background-color: #fafbfc;
+  border: 1px solid gray;
+  color: gray;
+  width: 140px;
+  height: 40px;
+  :hover {
+    background-color: gray;
+    color: #fff;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  box-sizing: border-box;
+  cursor: pointer;
+  @media only screen and (max-width: 600px) {
+    width: 100vw;
+    margin-bottom: 5px;
+  }
+`;
+
+const FlexJustifiedCenter = styled.div`
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+`;
+
+const TextArea = styled.textarea`
+  width: 100%;
+  background-color: #fafbfc;
+  border-radius: 3px;
+  height: 6em;
+  padding: 0 5px 0 5px;
+  font-size: 1.1em;
+  resize: none;
+`;
+
+const TitleInput = styled.input`
+  background-color: #fafbfc;
+  border-radius: 3px;
+  padding: 5px;
+  width: 40vw;
+  @media only screen and (max-width: 600px) {
+    width: 100vw;
+  }
+`;
+
 const TopContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 const TitleAndNumberContainer = styled.div`
   display: flex;
   font-size: 2em;
   max-width: 50vw;
+  flex-wrap: wrap;
 `;
 
 const NumberSpan = styled.span`
@@ -80,9 +179,13 @@ const IssueBody = styled.div`
 `;
 
 const mapStateToProps = (state: any) => ({
-  issues: state.issues
+  issues: state.issues,
+  currentUser: state.currentUser
 });
 
-const connectedSingleIssueView = connect(mapStateToProps)(SingleIssueView);
+const connectedSingleIssueView = connect(
+  mapStateToProps,
+  { updateIssue }
+)(SingleIssueView);
 
 export default WithAuth(connectedSingleIssueView);

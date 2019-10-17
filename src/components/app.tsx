@@ -35,7 +35,7 @@ class App extends React.Component<{}> {
                   component={(router: any) => <IssuesView router={router} />}
                 />
                 <Route
-                  path={'/single_issue/:id'}
+                  path={'/single_issue/:id/:repoName'}
                   component={(router: any) => (
                     <SingleIssueView router={router} />
                   )}

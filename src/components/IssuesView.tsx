@@ -74,6 +74,7 @@ const IssuesView = ({
               number={issue.number}
               created_at={issue.created_at}
               comments={issue.comments}
+              repoName={repoName}
             />
           )}
         />

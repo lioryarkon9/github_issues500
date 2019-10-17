@@ -4,14 +4,21 @@ import { getPrettyOpenedOn } from 'utils/prettify';
 import { Link } from 'react-router-dom';
 import { Icon } from 'antd';
 
-const IssueItem = ({ id, title, number, created_at, comments }: any) => (
+const IssueItem = ({
+  id,
+  title,
+  number,
+  created_at,
+  comments,
+  repoName
+}: any) => (
   <StyledIssue>
     <LeftContainer>
       <Flex>
         <IssueStateIcon>
           <Icon type="solution" />
         </IssueStateIcon>
-        <Link to={`/single_issue/${id}`}>
+        <Link to={`/single_issue/${id}/${repoName}`}>
           <IssueLinkSpan>{title}</IssueLinkSpan>
         </Link>
       </Flex>

@@ -14,18 +14,6 @@ const issuesReducer = handleActions<IssuesState>(
       const issuesList = action.payload;
 
       return keyBy('id', issuesList);
-    },
-
-    [actionNames.UPDATE_ISSUE_BODY]: (state, action) => {
-      const { issueId, updatedBody } = action.payload;
-
-      return {
-        ...state,
-        [issueId]: {
-          ...state[issueId],
-          body: updatedBody
-        }
-      };
     }
   },
 

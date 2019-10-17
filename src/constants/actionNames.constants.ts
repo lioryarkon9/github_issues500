@@ -2,7 +2,7 @@
 export const FETCH_ISSUES_BY_OWNER_AND_REPO = 'FETCH_ISSUES_BY_OWNER_AND_REPO';
 export const SET_ISSUES = 'SET_ISSUES';
 export const ADD_NEW_ISSUE = 'ADD_NEW_ISSUE';
-export const UPDATE_ISSUE_BODY = 'UPDATE_ISSUE_BODY';
+export const UPDATE_ISSUE = 'UPDATE_ISSUE';
 
 // ---- repos ----
 export const SET_REPOS = 'SET_REPOS';

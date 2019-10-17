@@ -62,7 +62,33 @@ const onSuccessAddNewIssue = ({ router }: any) => {
   };
 };
 
-export const updateIssueBody = (issueId: string, updatedBody: string) => ({
-  type: actionNames.UPDATE_ISSUE_BODY,
-  payload: { issueId, updatedBody }
+const onSuccessUpdateNewIssue = ({ router }: any) => {
+  router.history.goBack();
+  return {
+    type: 'ON_SUCCESS_UPDATE_NEW_ISSUE'
+  };
+};
+
+export const updateIssue = ({
+  issueTitle: title,
+  issueBody: body,
+  userName,
+  repoName,
+  issueNumber,
+  router
+}: any): ApiAction<any> => ({
+  type: actionNames.UPDATE_ISSUE,
+  meta: { api: true },
+  payload: {
+    path: `/repos/${userName}/${repoName}/issues/${issueNumber}`,
+    baseUrl: 'https://api.github.com',
+    method: 'patch',
+    networkLabel: '',
+    data: JSON.stringify({ title, body, labels: [] }),
+    onError: error => {
+      console.error('ERROR UPDATING ISSUE', error);
+      window.alert('something was wrong. try again');
+    },
+    onSuccess: (data: any) => onSuccessUpdateNewIssue({ router })
+  }
 });
