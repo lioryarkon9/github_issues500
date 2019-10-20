@@ -11,6 +11,7 @@ import ViewTitle from 'components/ViewTitle';
 const NewIssueView = ({ router, currentUser, addNewIssue }: any) => {
   const userName = currentUser ? currentUser.login : '';
   const repoName = router.match.params['repo_name'];
+
   const [issueTitle, setIssueTitle] = useState('');
   const [issueBody, setIssueBody] = useState('');
 

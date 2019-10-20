@@ -8,11 +8,11 @@ import { Link } from 'react-router-dom';
 import WithAuth from 'components/WithAuth';
 import ViewTitle from 'components/ViewTitle';
 
-const ReposView = ({ repos, fetchRepos: fetchUserRepos }: any) => {
+const ReposView = ({ repos, fetchRepos }: any) => {
   const reposList = values(repos);
 
   useEffect(() => {
-    fetchUserRepos();
+    fetchRepos();
   }, []);
 
   if (!reposList.length) {
@@ -22,6 +22,7 @@ const ReposView = ({ repos, fetchRepos: fetchUserRepos }: any) => {
   return (
     <>
       <ViewTitle>Choose a Repo</ViewTitle>
+
       <ReposGrid>
         {reposList.map(repo => (
           <Link

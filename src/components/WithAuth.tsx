@@ -2,23 +2,35 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { State } from 'types/redux.types';
 import { Redirect } from 'react-router';
-import { fetchUserDetails } from 'actions/currentUser.actions';
+import { fetchUserDetails, setUserDetails } from 'actions/currentUser.actions';
 
 type AuthProps = {
   currentUser: any;
   rest?: any;
   fetchUserDetails: any;
+  setUserDetails: any;
 };
 
 const WithAuth = (Component: React.FunctionComponent<any>) => {
   const RenderAuthorized = ({
     currentUser,
     fetchUserDetails,
+    setUserDetails,
     ...rest
   }: AuthProps) => {
+    const cachedUser = window.sessionStorage.getItem('_currentUser');
+
     if (!currentUser) {
-      fetchUserDetails();
-    } else if (!window.sessionStorage.getItem('_token')) {
+      if (cachedUser) {
+        setUserDetails(JSON.parse(cachedUser));
+      } else {
+        fetchUserDetails();
+      }
+
+      return null;
+    }
+
+    if (!window.sessionStorage.getItem('_token')) {
       return <Redirect to="/login" />;
     }
 
@@ -31,7 +43,10 @@ const WithAuth = (Component: React.FunctionComponent<any>) => {
 
   return connect(
     mapStateToProps,
-    { fetchUserDetails }
+    {
+      fetchUserDetails,
+      setUserDetails
+    }
   )(RenderAuthorized);
 };
 

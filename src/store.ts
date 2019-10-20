@@ -3,6 +3,8 @@ import { RESTORE_LOCAL_STORAGE_KEY } from 'constants/restore.constants';
 
 import rootReducer from 'reducers/root.reducer';
 import apiMiddleware from 'middlewares/api.middleware';
+import navigationMiddleware from 'middlewares/navigation.middleware';
+import persistMiddleware from 'middlewares/persist.middleare';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -13,7 +15,7 @@ declare const window: Window & {
 const composeEnhancers =
   (isDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-const middlewares = [apiMiddleware];
+const middlewares = [apiMiddleware, navigationMiddleware, persistMiddleware];
 
 if (isDev) {
   middlewares.push(require('redux-freeze'));

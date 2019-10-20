@@ -7,17 +7,13 @@ import { Redirect } from 'react-router';
 import ViewTitle from 'components/ViewTitle';
 import { GITHUB_CLIENT_ID } from 'constants/custom.constants';
 
-const LoginView = ({
-  location,
-  currentUser,
-  fetchToken: fetchTokenByCodeAndGetUserDetails
-}: any) => {
+const LoginView = ({ location, currentUser, fetchToken }: any) => {
   const gitHubUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=repo`;
   const code = location.search.split('=')[1];
 
   useEffect(() => {
     if (code && !currentUser) {
-      fetchTokenByCodeAndGetUserDetails(code);
+      fetchToken(code);
     }
   }, []);
 

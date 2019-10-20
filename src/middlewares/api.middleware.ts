@@ -9,6 +9,7 @@ import { State } from 'types/redux.types';
 import { BASE_URL } from 'constants/config';
 import * as logger from 'utils/logger';
 import { toggleLoaderStatus } from 'actions/ui.actions';
+import { GITHUB_BASE_URL } from 'constants/custom.constants';
 
 export function dispatchActions(
   dispatch: Dispatch<BaseAction>,
@@ -42,13 +43,20 @@ export function apiMiddleware({ dispatch }: Store<State>) {
       data,
       method
     } = payload;
-    const headers: { [key: string]: string } = {};
+    const headers: Record<string, string> = {};
     const requestUrl = urljoin(baseUrl || BASE_URL, path);
 
-    if (action.payload.baseUrl === 'https://api.github.com') {
+    if (action.payload.baseUrl === GITHUB_BASE_URL) {
       headers['Authorization'] = `token ${window.sessionStorage.getItem(
         '_token'
       )}`;
+    }
+
+    // force browser to avoid caching items after editing through patch http request
+    if (action.type === 'FETCH_ISSUES_BY_OWNER_AND_REPO') {
+      const now = new Date();
+
+      headers['If-Modified-Since'] = now.toString();
     }
 
     next(action);

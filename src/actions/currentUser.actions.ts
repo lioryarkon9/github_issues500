@@ -1,5 +1,6 @@
 import * as actionNames from 'constants/actionNames.constants';
 import { ApiAction } from 'actions/api.actions';
+import { GITHUB_BASE_URL } from 'constants/custom.constants';
 
 export const fetchToken = (code: string): ApiAction<any> => ({
   type: actionNames.FETCH_TOKEN,
@@ -32,18 +33,14 @@ export const fetchUserDetails = (): ApiAction<any> => ({
       window.alert('something went wrong, try again');
     },
     onSuccess: (data: any) => setUserDetails(data),
-    baseUrl: 'https://api.github.com'
+    baseUrl: GITHUB_BASE_URL
   }
 });
 
-const setTokenOnSessionStorage = (token: string) => {
-  // not managed by store but required as onSuccess action
-  window.sessionStorage.setItem('_token', token);
-
-  return {
-    type: 'SET_TOKEN_ON_SESSION_STORAGE'
-  };
-};
+const setTokenOnSessionStorage = (token: string) => ({
+  type: 'SET_TOKEN_ON_SESSION_STORAGE',
+  payload: token
+});
 
 export const setUserDetails = (jsObject: any) => ({
   type: actionNames.SET_USER_DETAILS,

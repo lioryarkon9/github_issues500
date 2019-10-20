@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -6,26 +6,30 @@ import WithAuth from 'components/WithAuth';
 import CreateButton from 'components/CreateButton';
 import { fetchIssuesByOwnerAndRepo, updateIssue } from 'actions/issues.actions';
 import { Redirect } from 'react-router';
+import { get } from 'lodash';
 
 const SingleIssueView = ({
   router,
-  issues,
   updateIssue,
   currentUser,
-  fetchIssuesByOwnerAndRepo
+  currentIssue
 }: any) => {
-  const singleIssueId = parseInt(router.match.params.id);
-  const repoName = router.match.params.repoName;
-  const currentIssue = issues[singleIssueId];
-  const title = currentIssue ? currentIssue.title : '';
-  const body = currentIssue ? currentIssue.body : '';
+  const { repoName } = router.match.params;
+
   const [isEditable, setIsEditable] = useState(false);
-  const [titleValue, setTitleValue] = useState(title);
-  const [bodyValue, setBodyValue] = useState(body);
+  const [issueTitle, setIssueTitle] = useState(get(currentIssue, 'title'));
+  const [issueBody, setIssueBody] = useState(get(currentIssue, 'body'));
 
   if (!currentIssue) {
     return <Redirect to="/issues" />;
   }
+
+  const {
+    title: originalTitle,
+    body: originalBody,
+    state: issueState,
+    number: issueNumber
+  } = currentIssue;
 
   return (
     <>
@@ -33,33 +37,31 @@ const SingleIssueView = ({
         <TitleAndNumberContainer>
           <div>
             {!isEditable ? (
-              currentIssue.title
+              originalTitle
             ) : (
               <TitleInput
-                value={titleValue}
-                onChange={e => setTitleValue(e.currentTarget.value)}
+                value={issueTitle}
+                onChange={e => setIssueTitle(e.currentTarget.value)}
               />
             )}
-            <NumberSpan> #{currentIssue.number}</NumberSpan>
+            <NumberSpan> #{issueNumber}</NumberSpan>
           </div>
         </TitleAndNumberContainer>
 
         <EditButton
           onClick={() => {
             setIsEditable(!isEditable);
-            setTitleValue(currentIssue.title);
-            setBodyValue(currentIssue.body);
+            setIssueTitle(originalTitle);
+            setIssueBody(originalBody);
           }}>
           {isEditable ? 'Cancel' : 'Edit'}
         </EditButton>
       </TopContainer>
       <MiddleContainer>
-        <StateMockButton issueState={currentIssue.state}>
-          {currentIssue.state}
-        </StateMockButton>
+        <StateMockButton issueState={issueState}>{issueState}</StateMockButton>
         <IssueInfo>
-          {currentIssue.user.login} opened this issue{' '}
-          {moment(currentIssue.created_at).fromNow()} &#183;{' '}
+          {currentIssue.user.login} opened this issue &middot;&nbsp;
+          {moment(currentIssue.created_at).fromNow()} &middot;&nbsp;
           {currentIssue.comments}
         </IssueInfo>
       </MiddleContainer>
@@ -67,11 +69,11 @@ const SingleIssueView = ({
       <IssueBody>
         {isEditable ? (
           <TextArea
-            value={bodyValue}
-            onChange={e => setBodyValue(e.currentTarget.value)}
+            value={issueBody}
+            onChange={e => setIssueBody(e.currentTarget.value)}
           />
         ) : (
-          currentIssue.body
+          originalBody
         )}
       </IssueBody>
 
@@ -80,11 +82,11 @@ const SingleIssueView = ({
           <CreateButton
             onClick={() =>
               updateIssue({
-                issueTitle: titleValue,
-                issueBody: bodyValue,
+                issueTitle,
+                issueBody,
                 userName: currentUser.login,
                 repoName,
-                issueNumber: currentIssue.number,
+                issueNumber,
                 router
               })
             }>
@@ -191,10 +193,14 @@ const IssueBody = styled.div`
   margin-top: 10px;
 `;
 
-const mapStateToProps = (state: any) => ({
-  issues: state.issues,
-  currentUser: state.currentUser
-});
+const mapStateToProps = (state: any, ownProps: any) => {
+  const currentIssueId = parseInt(ownProps.router.match.params.id);
+
+  return {
+    currentIssue: state.issues[currentIssueId],
+    currentUser: state.currentUser
+  };
+};
 
 const connectedSingleIssueView = connect(
   mapStateToProps,
