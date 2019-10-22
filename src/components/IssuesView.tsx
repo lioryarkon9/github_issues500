@@ -1,28 +1,35 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
-import ItemsContainer from 'components/ItemsContainer';
-import { fetchIssuesByOwnerAndRepo } from 'actions/issues.actions';
-import { onChangeFilterInput } from 'actions/ui.actions';
-import NewIssueButton from 'components/NewIssueButton';
-import { State } from 'types/redux.types';
 import { values } from 'lodash/fp';
-import IssueItem from 'components/IssueItem';
-import WithAuth from 'components/WithAuth';
 import { List } from 'antd';
+import { Link, RouteComponentProps } from 'react-router-dom';
+
+import { fetchIssuesByOwnerAndRepo, UserAndRepo } from 'actions/issues.actions';
+import { onChangeFilterInput } from 'actions/ui.actions';
+import { State } from 'types/redux.types';
+
 import {
   filterInputSelector,
   issuesFilteredByInputChangeSelector
 } from 'selectors/issues.selectors';
-import { Link } from 'react-router-dom';
+
+import { BaseAction } from 'types/base-redux.types';
+import { CurrentUserState } from 'reducers/currentUser.reducer';
+
+import IssueItem from 'components/IssueItem';
+import WithAuth from 'components/WithAuth';
+import NewIssueButton from 'components/NewIssueButton';
+import ItemsContainer from 'components/ItemsContainer';
+import { IssuesState } from 'reducers/issues.reducer';
 
 type Props = {
-  onChangeFilterInput(value: string): Object;
-  fetchIssuesByOwnerAndRepo(param: Object): Object;
-  router: any;
-  currentUser: any;
-  issues: any;
-  issuesListByOnChange: [Object];
+  onChangeFilterInput(value: string): BaseAction;
+  fetchIssuesByOwnerAndRepo(param: UserAndRepo): BaseAction;
+  router: RouteComponentProps<any>;
+  currentUser: CurrentUserState;
+  issues: IssuesState;
+  issuesListByOnChange: [IssuesState];
   filterInputValue: string;
 };
 

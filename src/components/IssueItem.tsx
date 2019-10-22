@@ -3,7 +3,14 @@ import styled from '@emotion/styled';
 import { getPrettyOpenedOn } from 'utils/prettify';
 import { Icon } from 'antd';
 
-const IssueItem = ({ title, number, created_at, comments }: any) => (
+type Props = {
+  title: string;
+  number: number;
+  created_at: string;
+  comments: number;
+};
+
+const IssueItem = ({ title, number, created_at, comments }: Props) => (
   <StyledIssue>
     <LeftContainer>
       <Flex>

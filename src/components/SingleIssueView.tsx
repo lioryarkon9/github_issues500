@@ -4,15 +4,23 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import WithAuth from 'components/WithAuth';
 import CreateButton from 'components/CreateButton';
-import { fetchIssuesByOwnerAndRepo, updateIssue } from 'actions/issues.actions';
+import {
+  AddNewIssueProps,
+  fetchIssuesByOwnerAndRepo,
+  updateIssue
+} from 'actions/issues.actions';
 import { get } from 'lodash';
 import { State } from 'types/redux.types';
+import { RouteComponentProps } from 'react-router';
+import { BaseAction } from 'types/base-redux.types';
+import { CurrentUserState } from 'reducers/currentUser.reducer';
+import { Issue } from 'reducers/issues.reducer';
 
 type Props = {
-  router: any;
-  updateIssue(param: Object): Object;
-  currentUser: any;
-  currentIssue: any;
+  router: RouteComponentProps<any>;
+  updateIssue(param: AddNewIssueProps & { issueNumber: number }): BaseAction;
+  currentUser: CurrentUserState | null;
+  currentIssue: Issue;
   fetchIssuesByOwnerAndRepo(param: { user: string; repo: Object }): Object;
 };
 
@@ -30,7 +38,10 @@ const SingleIssueView = ({
   const [issueBody, setIssueBody] = useState(get(currentIssue, 'body'));
 
   if (!currentIssue) {
-    fetchIssuesByOwnerAndRepo({ user: currentUser.login, repo: repoName });
+    if (currentUser) {
+      fetchIssuesByOwnerAndRepo({ user: currentUser.login, repo: repoName });
+    }
+
     return null;
   }
 
@@ -70,7 +81,8 @@ const SingleIssueView = ({
       <MiddleContainer>
         <StateMockButton issueState={issueState}>{issueState}</StateMockButton>
         <IssueInfo>
-          {currentIssue.user.login} opened this issue &middot;&nbsp;
+          {currentIssue.user ? currentIssue.user.login : null} opened this issue
+          &middot;&nbsp;
           {moment(currentIssue.created_at).fromNow()} &middot;&nbsp;
           {currentIssue.comments}
         </IssueInfo>
@@ -94,7 +106,7 @@ const SingleIssueView = ({
               updateIssue({
                 issueTitle,
                 issueBody,
-                userName: currentUser.login,
+                userName: currentUser ? currentUser.login : '',
                 repoName,
                 issueNumber,
                 router

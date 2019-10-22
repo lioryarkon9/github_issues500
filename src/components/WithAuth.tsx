@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { State } from 'types/redux.types';
 import { Redirect } from 'react-router';
 import { fetchUserDetails, setUserDetails } from 'actions/currentUser.actions';
+import { CurrentUserState } from 'reducers/currentUser.reducer';
+import { BaseAction } from 'types/base-redux.types';
 
 type AuthProps = {
-  currentUser: any;
+  currentUser: CurrentUserState;
   rest?: any;
-  fetchUserDetails: any;
-  setUserDetails: any;
+  fetchUserDetails(): BaseAction;
+  setUserDetails(param: CurrentUserState): BaseAction;
 };
 
 const WithAuth = (Component: React.FunctionComponent<any>) => {

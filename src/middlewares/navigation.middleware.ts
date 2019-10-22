@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux';
 import { BaseAction } from 'types/base-redux.types';
+import { RouterProps } from 'react-router';
 
 const actionsRequiringNavigation = [
   'ON_SUCCESS_ADD_NEW_ISSUE',
@@ -7,7 +8,7 @@ const actionsRequiringNavigation = [
 ];
 
 const navigationMiddleware = () => (next: Dispatch<BaseAction>) => (
-  action: BaseAction & { router: any }
+  action: BaseAction & { router: RouterProps }
 ) => {
   next(action);
 

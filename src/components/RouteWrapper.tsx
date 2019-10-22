@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import styled from '@emotion/styled';
 import { State } from 'types/redux.types';
 import { connect } from 'react-redux';
 import Loader from 'components/Loder/Loader';
+import { CurrentUserState } from 'reducers/currentUser.reducer';
 
-const RouteWrapper = ({ children, currentUser, isDisplayLoader }: any) => (
+type Props = {
+  children: ComponentProps<any>;
+  currentUser: CurrentUserState;
+  isDisplayLoader: boolean;
+};
+
+const RouteWrapper = ({ children, currentUser, isDisplayLoader }: Props) => (
   <Wrapper>
     {isDisplayLoader ? <Loader /> : null}
 

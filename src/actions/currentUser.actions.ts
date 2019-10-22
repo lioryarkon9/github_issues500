@@ -1,6 +1,7 @@
 import * as actionNames from 'constants/actionNames.constants';
 import { ApiAction } from 'actions/api.actions';
 import { GITHUB_BASE_URL } from 'constants/custom.constants';
+import { CurrentUserState } from 'reducers/currentUser.reducer';
 
 type Data = {
   token: string;
@@ -25,7 +26,7 @@ export const fetchToken = (code: string): ApiAction<any> => ({
   }
 });
 
-export const fetchUserDetails = (): ApiAction<any> => ({
+export const fetchUserDetails = (): ApiAction<CurrentUserState> => ({
   type: actionNames.FETCH_USER_DETAILS,
   meta: { api: true },
   payload: {
@@ -36,7 +37,7 @@ export const fetchUserDetails = (): ApiAction<any> => ({
       console.error('ERROR FETCHING USER DETAILS', error);
       window.alert('something went wrong, try again');
     },
-    onSuccess: (data: any) => setUserDetails(data),
+    onSuccess: (data: CurrentUserState) => setUserDetails(data),
     baseUrl: GITHUB_BASE_URL
   }
 });
@@ -46,7 +47,7 @@ const setTokenOnSessionStorage = (token: string) => ({
   payload: token
 });
 
-export const setUserDetails = (jsObject: any) => ({
+export const setUserDetails = (jsObject: CurrentUserState) => ({
   type: actionNames.SET_USER_DETAILS,
   payload: jsObject
 });

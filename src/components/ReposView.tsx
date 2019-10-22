@@ -8,10 +8,12 @@ import { Link } from 'react-router-dom';
 import WithAuth from 'components/WithAuth';
 import ViewTitle from 'components/ViewTitle';
 import { Icon } from 'antd';
+import { BaseAction } from 'types/base-redux.types';
+import { ReposState } from 'reducers/repos.reducer';
 
 type Props = {
-  repos: State['repos'];
-  fetchRepos(): void;
+  repos: ReposState;
+  fetchRepos(): BaseAction;
 };
 
 const ReposView = ({ repos, fetchRepos }: Props) => {

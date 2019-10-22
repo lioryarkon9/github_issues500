@@ -6,11 +6,14 @@ import { State } from 'types/redux.types';
 import { Redirect } from 'react-router';
 import ViewTitle from 'components/ViewTitle';
 import { GITHUB_CLIENT_ID } from 'constants/custom.constants';
+import { CurrentUserState } from 'reducers/currentUser.reducer';
+import * as H from 'history';
+import { BaseAction } from 'types/base-redux.types';
 
 type Props = {
-  location: any;
-  currentUser: any;
-  fetchToken(code: string): Object;
+  location: H.Location;
+  currentUser: CurrentUserState;
+  fetchToken(code: string): BaseAction;
 };
 
 const LoginView = ({ location, currentUser, fetchToken }: Props) => {

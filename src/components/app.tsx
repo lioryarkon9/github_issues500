@@ -4,13 +4,16 @@ import {
   Redirect,
   BrowserRouter as Router,
   Route,
-  Switch
+  Switch,
+  RouteComponentProps
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
+
 // TODO: remove if no need for Lazy load routes:
 import lazyLoad from 'utils/lazy-load.utils';
 import store from 'store';
 import theme from 'constants/themes.constants';
+
 import RouteWrapper from 'components/RouteWrapper';
 import NewIssueView from 'components/NewIssueView';
 import SingleIssueView from 'components/SingleIssueView';
@@ -32,17 +35,21 @@ class App extends React.Component<{}> {
                 <Route path="/repos" component={ReposView} />
                 <Route
                   path="/issues/:repo_name"
-                  component={(router: any) => <IssuesView router={router} />}
+                  component={(router: RouteComponentProps) => (
+                    <IssuesView router={router} />
+                  )}
                 />
                 <Route
                   path={'/single_issue/:id/:repoName'}
-                  component={(router: any) => (
+                  component={(router: RouteComponentProps) => (
                     <SingleIssueView router={router} />
                   )}
                 />
                 <Route
                   path="/new_issue/:repo_name"
-                  component={(router: any) => <NewIssueView router={router} />}
+                  component={(router: RouteComponentProps) => (
+                    <NewIssueView router={router} />
+                  )}
                 />
                 <Route
                   path="/lazy"

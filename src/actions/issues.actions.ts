@@ -1,24 +1,31 @@
 import { ApiAction } from 'actions/api.actions';
 import * as actionNames from 'constants/actionNames.constants';
 import { GITHUB_BASE_URL } from 'constants/custom.constants';
+import { RouteComponentProps } from 'react-router';
+import { BaseAction } from 'types/base-redux.types';
+import { IssuesState } from 'reducers/issues.reducer';
 
-type UserAndRepo = {
+export type Router = {
+  router: RouteComponentProps;
+};
+
+export type UserAndRepo = {
   user: string;
   repo: string;
 };
 
-type AddNewIssueProps = {
+export type AddNewIssueProps = {
   issueTitle: string;
   issueBody: string;
   userName: string;
   repoName: string;
-  router: any;
+  router: RouteComponentProps;
 };
 
 export const fetchIssuesByOwnerAndRepo = ({
   user,
   repo
-}: UserAndRepo): ApiAction<any> => {
+}: UserAndRepo): ApiAction<BaseAction> => {
   return {
     type: actionNames.FETCH_ISSUES_BY_OWNER_AND_REPO,
     meta: { api: true },
@@ -36,7 +43,7 @@ export const fetchIssuesByOwnerAndRepo = ({
   };
 };
 
-export const setIssues = (issuesList: [any]) => ({
+export const setIssues = (issuesList: [IssuesState]) => ({
   type: actionNames.SET_ISSUES,
   payload: issuesList
 });
@@ -47,7 +54,7 @@ export const addNewIssue = ({
   userName,
   repoName,
   router
-}: AddNewIssueProps): ApiAction<any> => ({
+}: AddNewIssueProps): ApiAction<BaseAction> => ({
   type: actionNames.ADD_NEW_ISSUE,
   meta: { api: true },
   payload: {
@@ -64,14 +71,14 @@ export const addNewIssue = ({
   }
 });
 
-const onSuccessAddNewIssue = ({ router }: any) => {
+const onSuccessAddNewIssue = ({ router }: Router) => {
   return {
     type: 'ON_SUCCESS_ADD_NEW_ISSUE',
     router
   };
 };
 
-const onSuccessUpdateNewIssue = ({ router }: any) => {
+const onSuccessUpdateNewIssue = ({ router }: Router) => {
   return {
     type: 'ON_SUCCESS_UPDATE_NEW_ISSUE',
     router
@@ -85,7 +92,7 @@ export const updateIssue = ({
   repoName,
   issueNumber,
   router
-}: AddNewIssueProps & { issueNumber: number }): ApiAction<any> => ({
+}: AddNewIssueProps & { issueNumber: number }): ApiAction<BaseAction> => ({
   type: actionNames.UPDATE_ISSUE,
   meta: { api: true },
   payload: {

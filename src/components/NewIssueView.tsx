@@ -4,14 +4,17 @@ import styled from '@emotion/styled';
 import ItemsContainer from 'components/ItemsContainer';
 import CreateButton from 'components/CreateButton';
 import { State } from 'types/redux.types';
-import { addNewIssue } from 'actions/issues.actions';
+import { addNewIssue, AddNewIssueProps } from 'actions/issues.actions';
 import WithAuth from 'components/WithAuth';
 import ViewTitle from 'components/ViewTitle';
+import { RouteComponentProps } from 'react-router';
+import { CurrentUserState } from 'reducers/currentUser.reducer';
+import { BaseAction } from 'types/base-redux.types';
 
 type Props = {
-  router: any;
-  currentUser: any;
-  addNewIssue(param: Object): Object;
+  router: RouteComponentProps<any>;
+  currentUser: CurrentUserState;
+  addNewIssue(param: AddNewIssueProps): BaseAction;
 };
 
 const NewIssueView = ({ router, currentUser, addNewIssue }: Props) => {
