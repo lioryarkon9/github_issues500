@@ -5,14 +5,14 @@ import moment from 'moment';
 import WithAuth from 'components/WithAuth';
 import CreateButton from 'components/CreateButton';
 import { fetchIssuesByOwnerAndRepo, updateIssue } from 'actions/issues.actions';
-import { Redirect } from 'react-router';
 import { get } from 'lodash';
 
 const SingleIssueView = ({
   router,
   updateIssue,
   currentUser,
-  currentIssue
+  currentIssue,
+  fetchIssuesByOwnerAndRepo
 }: any) => {
   const { repoName } = router.match.params;
 
@@ -21,7 +21,8 @@ const SingleIssueView = ({
   const [issueBody, setIssueBody] = useState(get(currentIssue, 'body'));
 
   if (!currentIssue) {
-    return <Redirect to="/issues" />;
+    fetchIssuesByOwnerAndRepo({ user: currentUser.login, repo: repoName });
+    return null;
   }
 
   const {
