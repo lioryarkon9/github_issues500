@@ -14,6 +14,7 @@ import {
   filterInputSelector,
   issuesFilteredByInputChangeSelector
 } from 'selectors/issues.selectors';
+import { Link } from 'react-router-dom';
 
 type Props = {
   onChangeFilterInput(value: string): Object;
@@ -81,15 +82,16 @@ const IssuesView = ({
           locale={{ emptyText: emptyMessage }}
           dataSource={issuesToRender}
           renderItem={(issue: any) => (
-            <IssueItem
+            <Link
               key={issue.id.toString()}
-              id={issue.id}
-              title={issue.title}
-              number={issue.number}
-              created_at={issue.created_at}
-              comments={issue.comments}
-              repoName={repoName}
-            />
+              to={`/single_issue/${issue.id}/${repoName}`}>
+              <IssueItem
+                title={issue.title}
+                number={issue.number}
+                created_at={issue.created_at}
+                comments={issue.comments}
+              />
+            </Link>
           )}
         />
       </ItemsContainer>
