@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import WithAuth from 'components/WithAuth';
 import ViewTitle from 'components/ViewTitle';
+import { Icon } from 'antd';
 
 const ReposView = ({ repos, fetchRepos }: any) => {
   const reposList = values(repos);
@@ -30,7 +31,11 @@ const ReposView = ({ repos, fetchRepos }: any) => {
             key={repo.id}
             to={`issues/${repo.name}`}>
             <Repo>
+              <PrivacyStatus>
+                {repo.private ? <Icon type="lock" /> : null}
+              </PrivacyStatus>
               <RepoName>{repo.name}</RepoName>
+              <IssuesCount>{repo.open_issues_count} issues</IssuesCount>
             </Repo>
           </Link>
         ))}
@@ -38,6 +43,17 @@ const ReposView = ({ repos, fetchRepos }: any) => {
     </>
   );
 };
+
+const IssuesCount = styled.div`
+  width: 100%;
+  text-align: center;
+  font-size: 0.8em;
+`;
+
+const PrivacyStatus = styled.div`
+  width: 100%;
+  text-align: center;
+`;
 
 const RepoName = styled.div`
   white-space: nowrap;
@@ -58,6 +74,7 @@ const Repo = styled.div`
   color: #3c4146;
   font-weight: bold;
   padding: 5px;
+  flex-wrap: wrap;
   :hover {
     background-color: #3c4146;
     color: #a6afb9;
