@@ -8,7 +8,13 @@ import { addNewIssue } from 'actions/issues.actions';
 import WithAuth from 'components/WithAuth';
 import ViewTitle from 'components/ViewTitle';
 
-const NewIssueView = ({ router, currentUser, addNewIssue }: any) => {
+type Props = {
+  router: any;
+  currentUser: any;
+  addNewIssue(param: Object): Object;
+};
+
+const NewIssueView = ({ router, currentUser, addNewIssue }: Props) => {
   const userName = currentUser ? currentUser.login : '';
   const repoName = router.match.params['repo_name'];
 

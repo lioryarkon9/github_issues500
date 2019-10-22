@@ -9,7 +9,12 @@ import WithAuth from 'components/WithAuth';
 import ViewTitle from 'components/ViewTitle';
 import { Icon } from 'antd';
 
-const ReposView = ({ repos, fetchRepos }: any) => {
+type Props = {
+  repos: State['repos'];
+  fetchRepos(): void;
+};
+
+const ReposView = ({ repos, fetchRepos }: Props) => {
   const reposList = values(repos);
 
   useEffect(() => {

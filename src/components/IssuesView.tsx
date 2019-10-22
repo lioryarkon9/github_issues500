@@ -15,15 +15,25 @@ import {
   issuesFilteredByInputChangeSelector
 } from 'selectors/issues.selectors';
 
+type Props = {
+  onChangeFilterInput(value: string): Object;
+  fetchIssuesByOwnerAndRepo(param: Object): Object;
+  router: any;
+  currentUser: any;
+  issues: any;
+  issuesListByOnChange: [Object];
+  filterInputValue: string;
+};
+
 const IssuesView = ({
   onChangeFilterInput,
-  fetchIssuesByOwnerAndRepo: fetchIssues,
+  fetchIssuesByOwnerAndRepo,
   router,
   currentUser,
   issues,
   issuesListByOnChange,
   filterInputValue
-}: any) => {
+}: Props) => {
   const repoName = router.match.params['repo_name'];
   const userName = currentUser ? currentUser.login : '';
 
@@ -38,7 +48,7 @@ const IssuesView = ({
 
   useEffect(() => {
     if (userName) {
-      fetchIssues({ user: userName, repo: repoName });
+      fetchIssuesByOwnerAndRepo({ user: userName, repo: repoName });
     }
   }, [userName]);
 

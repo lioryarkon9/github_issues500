@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { SET_USER_DETAILS } from 'constants/actionNames.constants';
 
-export type CurrentUserState = any;
+export type CurrentUserState = null | Object;
 
 const initialState = null;
 

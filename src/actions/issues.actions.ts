@@ -7,6 +7,14 @@ type UserAndRepo = {
   repo: string;
 };
 
+type AddNewIssueProps = {
+  issueTitle: string;
+  issueBody: string;
+  userName: string;
+  repoName: string;
+  router: any;
+};
+
 export const fetchIssuesByOwnerAndRepo = ({
   user,
   repo
@@ -39,7 +47,7 @@ export const addNewIssue = ({
   userName,
   repoName,
   router
-}: any): ApiAction<any> => ({
+}: AddNewIssueProps): ApiAction<any> => ({
   type: actionNames.ADD_NEW_ISSUE,
   meta: { api: true },
   payload: {
@@ -77,7 +85,7 @@ export const updateIssue = ({
   repoName,
   issueNumber,
   router
-}: any): ApiAction<any> => ({
+}: AddNewIssueProps & { issueNumber: number }): ApiAction<any> => ({
   type: actionNames.UPDATE_ISSUE,
   meta: { api: true },
   payload: {

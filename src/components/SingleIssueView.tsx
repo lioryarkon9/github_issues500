@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -6,6 +6,15 @@ import WithAuth from 'components/WithAuth';
 import CreateButton from 'components/CreateButton';
 import { fetchIssuesByOwnerAndRepo, updateIssue } from 'actions/issues.actions';
 import { get } from 'lodash';
+import { State } from 'types/redux.types';
+
+type Props = {
+  router: any;
+  updateIssue(param: Object): Object;
+  currentUser: any;
+  currentIssue: any;
+  fetchIssuesByOwnerAndRepo(param: { user: string; repo: Object }): Object;
+};
 
 const SingleIssueView = ({
   router,
@@ -13,7 +22,7 @@ const SingleIssueView = ({
   currentUser,
   currentIssue,
   fetchIssuesByOwnerAndRepo
-}: any) => {
+}: Props) => {
   const { repoName } = router.match.params;
 
   const [isEditable, setIsEditable] = useState(false);
@@ -194,7 +203,7 @@ const IssueBody = styled.div`
   margin-top: 10px;
 `;
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: State, ownProps: any) => {
   const currentIssueId = parseInt(ownProps.router.match.params.id);
 
   return {

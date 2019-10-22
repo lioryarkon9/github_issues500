@@ -2,9 +2,7 @@ import { handleActions } from 'redux-actions';
 import { keyBy } from 'lodash/fp';
 import { SET_REPOS } from 'constants/actionNames.constants';
 
-export type ReposState = {
-  [id: number]: any;
-};
+export type ReposState = Record<number, any>;
 
 const initialState = {};
 

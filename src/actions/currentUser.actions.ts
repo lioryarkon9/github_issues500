@@ -2,6 +2,10 @@ import * as actionNames from 'constants/actionNames.constants';
 import { ApiAction } from 'actions/api.actions';
 import { GITHUB_BASE_URL } from 'constants/custom.constants';
 
+type Data = {
+  token: string;
+};
+
 export const fetchToken = (code: string): ApiAction<any> => ({
   type: actionNames.FETCH_TOKEN,
   meta: { api: true },
@@ -14,7 +18,7 @@ export const fetchToken = (code: string): ApiAction<any> => ({
       window.alert('something went wrong, try again');
     },
     onSuccess: [
-      ({ token }: any) => setTokenOnSessionStorage(token),
+      ({ token }: Data) => setTokenOnSessionStorage(token),
       fetchUserDetails
     ],
     baseUrl: 'https://gatekeeper-test2.herokuapp.com'
