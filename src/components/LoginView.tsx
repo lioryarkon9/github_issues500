@@ -44,7 +44,7 @@ const LoginView = ({ location, currentUser, fetchToken }: Props) => {
   );
 };
 
-const pattern: RegExp = /code=([0-9a-zA-Z]{10,30})./;
+const pattern: RegExp = /code=([0-9a-zA-Z]{10,30})/;
 
 const FormInputsContainer = styled.div`
   display: flex;
