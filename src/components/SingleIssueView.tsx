@@ -176,7 +176,7 @@ const TopContainer = styled.div`
 
 const TitleAndNumberContainer = styled.div`
   display: flex;
-  font-size: 2em;
+  font-size: 1.7em;
   max-width: 50vw;
   flex-wrap: wrap;
 `;
