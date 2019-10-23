@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
-import { fetchToken } from 'actions/currentUser.actions';
 import { connect } from 'react-redux';
-import { State } from 'types/redux.types';
 import { Redirect } from 'react-router';
+import * as H from 'history';
+
+import { State } from 'types/redux.types';
+import { BaseAction } from 'types/base-redux.types';
+
+import { fetchToken } from 'actions/currentUser.actions';
 import ViewTitle from 'components/ViewTitle';
 import { GITHUB_CLIENT_ID } from 'constants/custom.constants';
 import { CurrentUserState } from 'reducers/currentUser.reducer';
-import * as H from 'history';
-import { BaseAction } from 'types/base-redux.types';
 
 type Props = {
   location: H.Location;
@@ -17,8 +19,10 @@ type Props = {
 };
 
 const LoginView = ({ location, currentUser, fetchToken }: Props) => {
-  const gitHubUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=repo`;
-  const code = location.search.split('=')[1];
+  const gitHubUrl: string = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=repo`;
+
+  const regexExec: RegExpExecArray | null = pattern.exec(location.search);
+  const code: string = regexExec ? regexExec[1] : '';
 
   useEffect(() => {
     if (code && !currentUser) {
@@ -39,6 +43,8 @@ const LoginView = ({ location, currentUser, fetchToken }: Props) => {
     </>
   );
 };
+
+const pattern: RegExp = /client_id=([0-9]{40})./;
 
 const FormInputsContainer = styled.div`
   display: flex;

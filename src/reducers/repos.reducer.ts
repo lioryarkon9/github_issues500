@@ -1,8 +1,17 @@
 import { handleActions } from 'redux-actions';
 import { keyBy } from 'lodash/fp';
 import { SET_REPOS } from 'constants/actionNames.constants';
+import { CurrentUserState } from 'reducers/currentUser.reducer';
 
-export type ReposState = Record<number, any>;
+export type Repo = {
+  id: number;
+  name: string;
+  private: boolean;
+  owner: CurrentUserState;
+  open_issues_count: number;
+};
+
+export type ReposState = Record<number, Repo>;
 
 const initialState = {};
 

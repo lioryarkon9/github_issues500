@@ -3,7 +3,7 @@ import { ApiAction } from 'actions/api.actions';
 import { GITHUB_BASE_URL } from 'constants/custom.constants';
 import { CurrentUserState } from 'reducers/currentUser.reducer';
 
-type Data = {
+type TokenData = {
   token: string;
 };
 
@@ -19,7 +19,7 @@ export const fetchToken = (code: string): ApiAction<any> => ({
       window.alert('something went wrong, try again');
     },
     onSuccess: [
-      ({ token }: Data) => setTokenOnSessionStorage(token),
+      ({ token }: TokenData) => setTokenOnSessionStorage(token),
       fetchUserDetails
     ],
     baseUrl: 'https://gatekeeper-test2.herokuapp.com'

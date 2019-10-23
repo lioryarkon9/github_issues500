@@ -6,7 +6,7 @@ import { fetchUserDetails, setUserDetails } from 'actions/currentUser.actions';
 import { CurrentUserState } from 'reducers/currentUser.reducer';
 import { BaseAction } from 'types/base-redux.types';
 
-type AuthProps = {
+type Props = {
   currentUser: CurrentUserState;
   rest?: any;
   fetchUserDetails(): BaseAction;
@@ -19,7 +19,7 @@ const WithAuth = (Component: React.FunctionComponent<any>) => {
     fetchUserDetails,
     setUserDetails,
     ...rest
-  }: AuthProps) => {
+  }: Props) => {
     const cachedUser = window.sessionStorage.getItem('_currentUser');
 
     if (!currentUser) {

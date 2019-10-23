@@ -21,7 +21,7 @@ type Props = {
   updateIssue(param: AddNewIssueProps & { issueNumber: number }): BaseAction;
   currentUser: CurrentUserState | null;
   currentIssue: Issue;
-  fetchIssuesByOwnerAndRepo(param: { user: string; repo: Object }): Object;
+  fetchIssuesByOwnerAndRepo(param: { user: string; repo: string }): BaseAction;
 };
 
 const SingleIssueView = ({

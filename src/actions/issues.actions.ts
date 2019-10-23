@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router';
 import { BaseAction } from 'types/base-redux.types';
 import { IssuesState } from 'reducers/issues.reducer';
 
-export type Router = {
+type Router = {
   router: RouteComponentProps;
 };
 
@@ -43,7 +43,7 @@ export const fetchIssuesByOwnerAndRepo = ({
   };
 };
 
-export const setIssues = (issuesList: [IssuesState]) => ({
+export const setIssues = (issuesList: IssuesState[]) => ({
   type: actionNames.SET_ISSUES,
   payload: issuesList
 });

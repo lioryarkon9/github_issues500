@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions';
+
 import {
   ON_CHANGE_FILTER_ISSUES_INPUT,
   TOGGLE_LOADER_STATUS

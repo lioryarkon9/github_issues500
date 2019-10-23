@@ -2,7 +2,7 @@ import { State } from 'types/redux.types';
 import { createSelector } from 'reselect';
 import { Issue, IssuesState } from 'reducers/issues.reducer';
 
-export const issuesSelector = (state: State): any => state.issues;
+export const issuesSelector = (state: State): IssuesState => state.issues;
 
 export const filterInputSelector = (state: State): string =>
   state.ui.filterInputValue;
@@ -10,7 +10,7 @@ export const filterInputSelector = (state: State): string =>
 export const issuesFilteredByInputChangeSelector = createSelector(
   issuesSelector,
   filterInputSelector,
-  (issues: IssuesState, valueToFilterBy: string): any => {
+  (issues: IssuesState, valueToFilterBy: string): Issue[] => {
     return Object.values(issues).filter((issue: Issue) => {
       const issueTitle = issue.title;
 

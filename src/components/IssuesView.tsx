@@ -21,7 +21,7 @@ import IssueItem from 'components/IssueItem';
 import WithAuth from 'components/WithAuth';
 import NewIssueButton from 'components/NewIssueButton';
 import ItemsContainer from 'components/ItemsContainer';
-import { IssuesState } from 'reducers/issues.reducer';
+import { Issue, IssuesState } from 'reducers/issues.reducer';
 
 type Props = {
   onChangeFilterInput(value: string): BaseAction;
@@ -29,7 +29,7 @@ type Props = {
   router: RouteComponentProps<any>;
   currentUser: CurrentUserState;
   issues: IssuesState;
-  issuesListByOnChange: [IssuesState];
+  issuesListByOnChange: Issue[];
   filterInputValue: string;
 };
 
